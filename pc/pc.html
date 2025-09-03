@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device width, initial-scale=1.0">
+        <title>NERDSHOP</title>
+        <link rel="stylesheet" href="pc.css">
+    </head>
+    <body>
+        <header class="headercima">
+            <div class="logo">NERDSHOP</div>
+
+            <div class="extras">
+                <a href="" class="especs">PC</a>
+                <a href="" class="espcs">Periféricos</a>
+                <a href="" class="especs">Console</a>
+                <a href="" class="espcs">Suporte</a>
+            </div>
+            <div class="barrapesquisa">
+                <input type="text" placeholder="BUCAR">
+                <button class="pesquisa">OK</button>
+            </div>
+            <div class="acoes-header">
+                <img src="src/1.png" alt="carrinho" class="iconheader">
+                <div class="menu-container">
+                    <img src="src/2.png" alt="menu" class="iconheader" onclick="toggleMenu()">
+                    <div class="menudropdown" id="menudropdown">
+                        <a href="login.html" class="botaomenu">login</a>
+                        <a href="cadastro.html" class="botaomenu">cadastro</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <sript> <!--dropdown-->
+            function toggleMenu(){
+                const menu = document.getElementById('menudropdown');
+                menu.classList.toggle('show');
+            }
+        </sript>
+    <body>
+    <div class="container">
+        <div class="card">
+            <span class="tag frete">Frete grátis</span>
+            <img src="src/4.jpg" alt="Headset Razer">
+            <h3>Razer Blackshark V2 X Com Fio 7.1 Surround Sound - Preto</h3>
+            <p class="price">R$ 1.079,10</p>
+            <p class="parcelado">ou até 10x de R$ 119,90</p>
+            <button>COMPRAR</button>
+        </div>
+
+
+        <div class="card">
+            <img src="src/4.jpg" alt="Mouse Razer">
+            <h3>Razer Deathadder V2 X Hyperspeed</h3>
+            <p class="old-price">R$ 549,90</p>
+            <p class="price desconto">R$ 449,90 <span>-18%</span></p>
+            <p class="parcelado">ou até 10x de R$ 44,98</p>
+            <span class="timer">TERMINA EM: 06D 17:09:07</span>
+            <button>COMPRAR</button>
+        </div>
+
+
+        <div class="card">
+            <img src="src/4.jpg" alt="Fone Razer">
+            <h3>Razer Hammerhead Pro V2 Fone Intra-auricular</h3>
+            <p class="price">R$ 279,90</p>
+            <p class="parcelado">ou até 10x de R$ 27,99</p>
+            <button>COMPRAR</button>
+        </div>
+
+
+        <div class="card">
+            <span class="tag frete">Frete grátis</span>
+            <img src="src/4.jpg" alt="Kraken Gaming">
+            <h3>Razer Kraken Gaming Headset Multi Platform Preto</h3>
+            <p class="price">R$ 989,10</p>
+            <p class="parcelado">ou até 10x de R$ 109,90</p>
+            <button>COMPRAR</button>
+        </div>
+
+
+        <div class="card">
+            <span class="tag frete">Frete grátis</span>
+            <img src="src/4.jpg" alt="Mouse Viper">
+            <h3>Razer Viper 16k Ambidestro Com Fio Ulraleve</h3>
+            <p class="price">R$ 509,15</p>
+            <p class="parcelado">ou até 10x de R$ 59,90</p>
+            <button>COMPRAR</button>
+        </div>
+    </div>
+</body>
+</html>
+
+
