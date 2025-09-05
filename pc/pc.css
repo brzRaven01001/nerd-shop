@@ -1,0 +1,211 @@
+body{
+    margin:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.headercima{
+    width: 100%;
+    background-color: #3b3437;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 50px 12px 30px;
+    position: relative;
+    z-index: 1000;
+}
+
+.acoes-header{
+    margin-right: 50px;
+}
+
+.logo {
+  color: rgb(18, 249, 1);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.barrapesquisa{
+  display: flex;
+  flex: 1;
+  max-width: 30px;
+  margin: 0 20px;
+}
+
+.barrapesquisa input {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.pesquisa{
+  padding: 8px 12px;
+  background: rgb(103, 96, 189);
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;    
+}
+
+.acoes-header{
+  display: flex;
+  align-items: center;
+  gap: 16px; 
+  margin-right: 50px; /* descola do canto direito */    
+}
+
+.iconheader{
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  cursor: pointer;    
+}
+
+.menu-container{
+    position: relative;
+}
+
+.menudropdown{
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background:#282224;
+  border-radius: 8px;
+  padding: 10px;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); 
+  z-index: 999;
+}
+
+.menudropdown.show{
+    display:flex;
+}
+
+.botaomenu{
+  padding: 8px 12px;
+  background-color: #1eff00;
+  border: none;
+  color: rgb(0, 0, 0);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.extras {
+  display: flex;
+  gap: 140px; 
+  font-weight: 500;
+}
+
+.extras a:link,
+.extras a:visited {
+  color: #1eff00;     
+  text-decoration: none; 
+}
+
+
+/**/
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  max-width: 140px;
+  margin: 10px auto;
+  display: block;
+}
+
+h3 {
+  font-size: 15px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.old-price {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: #888;
+}
+
+.desconto span {
+  font-size: 14px;
+  color: red;
+  margin-left: 5px;
+}
+
+.parcelado {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #ff6600;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #e65c00;
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #28a745;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.timer {
+  display: block;
+  font-size: 12px;
+  color: #d9534f;
+  margin: 5px 0;
+}
