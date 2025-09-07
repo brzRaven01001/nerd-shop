@@ -4,10 +4,11 @@ from models import model
 # define o blueprint
 url = Blueprint("app_pb", __name__)
 
+#rotas de cadastro
 @url.route("/produto", methods=["POST"])
 def post_produto():
     try:
-        data = request.get_json()  # Lê JSON enviado no body
+        data = request.get_json()  
         nome = data.get("nome")
         descricao = data.get("descricao")
         preco = data.get("preco")

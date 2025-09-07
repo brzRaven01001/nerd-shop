@@ -1,7 +1,8 @@
 import sqlite3
 
+#model com funcoes de cadastro
 def cria_tabela_produtos():
-    conn = sqlite3.connect("back/produto.db")  # caminho igual ao usado no bd.py
+    conn = sqlite3.connect("back/produto.db")  
     cursor = conn.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS produtos (
