@@ -1,55 +1,55 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Cadastrar Produto</title>
-    <link rel="stylesheet" href="cadastrar-produto.css">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/cadastrar-produto.css'>
+    <script src='../script/script.js'></script>
 </head>
 <body>
     <h1>Cadastrar Produto</h1>
     <form action="/submit-product" method="post">
-        <label for="product-name">Nome do Produto:</label>
-        <input type="text" id="product-name" name="product-name" placeholder="Ex: Teclado Mecânico" required>
+        <label for="product-name">Nome do Produto:</label><br>
+        <input type="text" id="product-name" name="product-name" required><br><br>
 
-        <label for="description">Descrição:</label>
-        <textarea id="description" name="description" rows="4" placeholder="Descrição do produto..." required></textarea>
+        <label for="description">Descrição:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
 
-        <label for="price">Preço:</label>
-        <input type="number" id="price" name="price" step="0.01" min="0" placeholder="Ex: 199.99" required>
+        <label for="price">Preço:</label><br>
+        <input type="number" id="price" name="price" step="0.01" required><br><br>
 
-        <label for="category">Categoria:</label>
+        <label for="category">Categoria:</label><br>
         <select id="category" name="category" required>
-            <option value="">--Selecione--</option>
             <option value="pc">PC</option>
             <option value="perifericos">Periféricos</option>
             <option value="console">Console</option>
             <option value="suporte">Suporte</option>
-        </select>
+        </select><br><br>
 
-        <label for="stock">Quantidade em Estoque:</label>
-        <input type="number" id="stock" name="stock" min="0" placeholder="Ex: 10" required>
+        <label for="stock">Quantidade em Estoque:</label><br>
+        <input type="number" id="stock" name="stock" required><br><br>
 
-        <label for="image-url">URL da Imagem:</label>
-        <input type="url" id="image-url" name="image-url" placeholder="Ex: https://site.com/imagem.jpg" required>
-        <img src="" alt="Preview" id="image-preview" onerror="this.style.display='none';" style="max-width:350px; display:none;">
+        <label for="image-url">URL da Imagem:</label><br>
+        <input type="url" id="image-url" name="image-url" required><br><br>
+        <img src="" alt="Preview" id="image-preview" style="max-width:350px; display:none;"><br><br>
+
+         <script>
+            document.getElementById('image-url').addEventListener('input', function() {
+                const url = this.value;
+                const preview = document.getElementById('image-preview');
+                if (url) {
+                    preview.src = url;
+                    preview.style.display = 'block';
+                } else {
+                    preview.style.display = 'none';
+                }
+            });
+        </script>
 
         <input type="submit" value="Cadastrar Produto">
     </form>
-
-    <script>
-        const imageInput = document.getElementById('image-url');
-        const imagePreview = document.getElementById('image-preview');
-
-        imageInput.addEventListener('input', function() {
-            const url = this.value.trim();
-            if(url) {
-                imagePreview.src = url;
-                imagePreview.style.display = 'block';
-            } else {
-                imagePreview.style.display = 'none';
-            }
-        });
-    </script>
+    
 </body>
 </html>
