@@ -1,7 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
 body{
     margin:0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
-    background: #ffffff;
+    background-image: url(src/background-cdprodutos.jpg);
+    background-repeat: no-repeat; 
+    background-position: center;   
+    background-size: cover;      
 }
 
 .headercima{
@@ -136,80 +146,43 @@ html, body {
   overflow-x: hidden;  
 }
 
-.fotos {
-  width: 100vw;        
-  height: 100vh;      
-}
-
-.fotos img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  
-  display: block;      
-}
-
-/* grid*/
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;                          
-  max-width: 900px;
-  width: 90%;
-  margin: 50px auto;
-}
-
-.grid img {
-  width: 100%;          
-  height: 300px;      
-  object-fit: cover;  
-  border-radius: 8px;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.grid img:hover {
-  transform: scale(1.05);
-}
-
-@-webkit-keyframes kenburns-top {
-  0% {
-    -webkit-transform: scale(1) translateY(0);
-            transform: scale(1) translateY(0);
-    -webkit-transform-origin: 50% 16%;
-            transform-origin: 50% 16%;
-  }
-  100% {
-    -webkit-transform: scale(1.25) translateY(-15px);
-            transform: scale(1.25) translateY(-15px);
-    -webkit-transform-origin: top;
-            transform-origin: top;
-  }
-}
-@keyframes kenburns-top {
-  0% {
-    -webkit-transform: scale(1) translateY(0);
-            transform: scale(1) translateY(0);
-    -webkit-transform-origin: 50% 16%;
-            transform-origin: 50% 16%;
-  }
-  100% {
-    -webkit-transform: scale(1.25) translateY(-15px);
-            transform: scale(1.25) translateY(-15px);
-    -webkit-transform-origin: top;
-            transform-origin: top;
-  }
-}
-
-.fotos.kenburns {
-  animation: kenburns-top 10s ease-in-out infinite alternate;
-}
-
-/* footer*/
-.footer {
+form {
+  background: transparent;
   padding: 20px;
-  text-align: center;
-  background: #000000;
-  font-size: 0.9rem;
-  color: #888;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 50px auto;
+
 }
 
+form input, form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+
+i {
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 20px;
+}
+
+.submit-button input {
+    text-align: center;
+    background-color:#ffffff;
+    color: rgb(0, 0, 0);
+    border-radius: 7px;
+}
+
+.submit-button input:hover{
+    transition: 0.3s;
+    background-color: #52c7a4;
+    cursor: pointer;
+}
+
+h1{
+    color: white
+}

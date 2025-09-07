@@ -5,20 +5,62 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Cadastrar Produto</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../css/cadastrar-produto.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='cadastro.css'>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src='../script/script.js'></script>
 </head>
 <body>
-    <h1>Cadastrar Produto</h1>
+    <header class="headercima">
+    <div class="logo"><a href="index.html">NERDSHOP</a></div>
+
+    <div class="extras">
+      <a href="pc/pc.html" class="espcs">PC</a>
+      <a href="perifericos.html" class="espcs">Periféricos</a>
+      <a href="console.html" class="espcs">Console</a>
+      <a href="suporte.html" class="espcs">Suporte</a>
+      <a href="cadastro.html" class="espcs">Cadastrar Produto</a>
+    </div>
+
+    <div class="barrapesquisa">
+        <input type="text" placeholder="BUSCAR">
+        <button class="pesquisa">OK</button>
+    </div>
+
+    <div class="acoes-header">
+        <img src="src/1.png" alt="carrinho" class="iconheader">
+        <div class="menu-container">
+            <img src="src/2.png" alt="menu" class="iconheader" onclick="toggleMenu()">
+            <div class="menudropdown" id="menudropdown">
+                <a href="../login/login.html" class="botaomenu">login</a> 
+                <a href="../cadastro/cadastro.html" class="botaomenu">cadastro</a>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+</header>
+
+<script> <!--dropdown-->
+  function toggleMenu() {
+    const menu = document.getElementById('menudropdown');
+    menu.classList.toggle('show');
+  }
+</script>
+
     <form action="/submit-product" method="post">
+        <h1>Cadastrar Produto</h1> <br>
         <label for="product-name">Nome do Produto:</label><br>
-        <input type="text" id="product-name" name="product-name" required><br><br>
+        <input type="text" id="product-name" name="product-name" required>
+        <i class='bx  bx-box'></i> <br>
 
         <label for="description">Descrição:</label><br>
-        <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea>
 
         <label for="price">Preço:</label><br>
-        <input type="number" id="price" name="price" step="0.01" required><br><br>
+        <input type="number" id="price" name="price" step="0.01" required> <i class='bx  bx-print-dollar'></i>
+        <i class='bx  bx-wallet-alt'  ></i> <br>
 
         <label for="category">Categoria:</label><br>
         <select id="category" name="category" required>
@@ -26,14 +68,17 @@
             <option value="perifericos">Periféricos</option>
             <option value="console">Console</option>
             <option value="suporte">Suporte</option>
-        </select><br><br>
+        </select>
 
         <label for="stock">Quantidade em Estoque:</label><br>
-        <input type="number" id="stock" name="stock" required><br><br>
+        <input type="number" id="stock" name="stock" required>
+        <i class='bx  bx-store'  ></i> <br>
+
 
         <label for="image-url">URL da Imagem:</label><br>
-        <input type="url" id="image-url" name="image-url" required><br><br>
-        <img src="" alt="Preview" id="image-preview" style="max-width:350px; display:none;"><br><br>
+        <input type="url" id="image-url" name="image-url" required>
+        <img src="" alt="Preview" id="image-preview" style="max-width:350px; display:none;">
+        <i class='bx  bx-image'  ></i> <br> <br>
 
          <script>
             document.getElementById('image-url').addEventListener('input', function() {
@@ -48,7 +93,9 @@
             });
         </script>
 
-        <input type="submit" value="Cadastrar Produto">
+        <div class="submit-button">
+            <input type="submit" value="Cadastrar Produto">
+        </div>
     </form>
     
 </body>
