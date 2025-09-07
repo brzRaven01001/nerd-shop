@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, render_template
-from models import model
+from back.models import model
 
 url = Blueprint("app_pb", __name__)
 @url.route("/cadastro")

@@ -2,19 +2,19 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NERDSHOP</title>
-    <link rel="stylesheet" href="style.css"/>
-    <script src='main.js'></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
 
 <header class="headercima">
-    <div class="logo">NERDSHOP</div> 
+    <div class="logo"><a href="index.html">NERDSHOP</a></div>
 
     <div class="extras">
-      <a href="pc.html" class="espcs">PC</a>
+      <a href="{{ url_for('pc') }}" class="espcs">PC</a>
       <a href="perifericos.html" class="espcs">Periféricos</a>
       <a href="console.html" class="espcs">Console</a>
       <a href="suporte.html" class="espcs">Suporte</a>
@@ -27,9 +27,10 @@
     </div>
 
     <div class="acoes-header">
-        <img src="src/1.png" alt="carrinho" class="iconheader">
+        <img src="{{ url_for('static', filename='src/1.png') }}" alt="carrinho" class="iconheader">
+        <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
         <div class="menu-container">
-            <img src="src/2.png" alt="menu" class="iconheader" onclick="toggleMenu()">
+            <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
             <div class="menudropdown" id="menudropdown">
                 <a href="../login/login.html" class="botaomenu">login</a> 
                 <a href="../cadastro/cadastro.html" class="botaomenu">cadastro</a>
@@ -51,16 +52,16 @@
 <!-- FIM DO HEADER -->
 
   <div class="foto">
-    <img src="src/3.jpg" alt="pc" class="fotos kenburns">
-    <img src="src/4.jpg" alt="console" class="fotos">
+    <img src="{{ url_for('static', filename='src/3.jpg') }}" alt="pc" class="fotos kenburns">
+    <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="console" class="fotos">
   </div>
   <!-- fotos perifericos-->
 
   <div class="grid">
-    <img src="src/5.jpg" alt="teclado">
-    <img src="src/6.jpg" alt="mouse">
-    <img src="src/7.jpg" alt="fone">
-    <img src="src/8.jpg" alt="controle">
+    <img src="{{ url_for('static', filename='src/5.jpg') }}" alt="teclado">
+    <img src="{{ url_for('static', filename='src/6.jpg') }}" alt="mouse">
+    <img src="{{ url_for('static', filename='src/7.jpg') }}" alt="fone">
+    <img src="{{ url_for('static', filename='src/8.jpg') }}" alt="controle">
   </div>
 
 

@@ -5,7 +5,7 @@ body{
 
 .headercima{
     width: 100%;
-    background-color: #3b3437;
+    background-color: #000000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,30 +22,45 @@ body{
   color: rgb(18, 249, 1);
   font-size: 24px;
   font-weight: bold;
+  text-decoration: none;
+}
+
+.logo a{
+    color: rgb(10, 255, 255);
+    text-decoration: none;
+}
+
+.logo a:hover{
+    color: #0cac9e;
+    transition: 0.3s;
+
 }
 
 .barrapesquisa{
-  display: flex;
-  flex: 1;
-  max-width: 30px;
-  margin: 0 20px;
+    display: flex;
+    flex:1;
+    max-width: 30px;
+    margin: 0 20px;
 }
 
 .barrapesquisa input {
-  flex: 1;
-  padding: 8px 10px;
-  border: none;
-  border-radius: 5px 0 0 5px;
-  outline: none;
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
 }
 
 .pesquisa{
-  padding: 8px 12px;
-  background: rgb(103, 96, 189);
-  border: none;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;    
+    padding: 8px 12px;
+    background: rgb(6, 204, 204);
+    color: rgb(255, 255, 255);
+    font-style: bold;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
 }
+
 
 .acoes-header{
   display: flex;
@@ -100,12 +115,16 @@ a {
   display: flex;
   gap: 140px; 
   font-weight: 500;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.extras a{
+  color: rgb(10, 255, 255);     
+  text-decoration: none; 
 }
 
-.extras a:link,
-.extras a:visited {
-  color: #1eff00;     
-  text-decoration: none; 
+.extras a:hover{
+  color: #0cac9e;
+  transition: 0.3s;
 }
 
 
