@@ -1,6 +1,8 @@
 import sqlite3
+import os
 
-#model com funcoes de cadastro
+caminho_banco = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'produto.db')
+
 def cria_tabela_produtos():
     conn = sqlite3.connect("back/produto.db")  
     cursor = conn.cursor()
@@ -19,9 +21,15 @@ def cria_tabela_produtos():
     conn.close()
     print("Tabela 'produtos' criada com sucesso!")
 
+
 def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
     try:
-        conn = sqlite3.connect("back/produto.db")
+        preco = float(preco)
+        estoque = int(estoque)
+        print("Tentando inserir:", nome, descricao, preco, categoria, estoque, imagem_url)
+        print("Caminho do banco:", caminho_banco)
+
+        conn = sqlite3.connect(caminho_banco)
         cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO produtos (nome, descricao, preco, categoria, estoque, imagem_url)
@@ -29,6 +37,8 @@ def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
         """, (nome, descricao, preco, categoria, estoque, imagem_url))
         conn.commit()
         conn.close()
-        return {"message": "Produto inserido com sucesso!"}
+        print("Produto inserido com sucesso:", nome)
+        return None
     except Exception as e:
+        print("Erro ao inserir produto:", e)
         return {"error": str(e)}

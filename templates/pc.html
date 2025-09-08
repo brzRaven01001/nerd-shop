@@ -4,11 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device width, initial-scale=1.0">
         <title>NERDSHOP</title>
-        <link rel="stylesheet" href="pc.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='pc.css') }}">
+
     </head>
     <body>
         <header class="headercima">
-            <div class="logo"><a href="../index.html">NERDSHOP</a></div>
+           <a href="{{ url_for('index') }}">NERDSHOP</a>
 
 
             <div class="extras">
@@ -42,7 +43,7 @@
     <div class="container">
         <div class="card">
             <span class="tag frete">Frete grátis</span>
-            <img src="../src/4.jpg" alt="Headset Razer">
+            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Headset Razer">
             <h3>Razer Blackshark V2 X Com Fio 7.1 Surround Sound - Preto</h3>
             <p class="price">R$ 1.079,10</p>
             <p class="parcelado">ou até 10x de R$ 119,90</p>
@@ -51,7 +52,8 @@
 
 
         <div class="card">
-            <img src="../src/4.jpg" alt="Mouse Razer">
+            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Mouse Razer">
+
             <h3>Razer Deathadder V2 X Hyperspeed</h3>
             <p class="old-price">R$ 549,90</p>
             <p class="price desconto">R$ 449,90 <span>-18%</span></p>
@@ -62,7 +64,7 @@
 
 
         <div class="card">
-            <img src="../src/4.jpg" alt="Fone Razer">
+            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Fone Razer">
             <h3>Razer Hammerhead Pro V2 Fone Intra-auricular</h3>
             <p class="price">R$ 279,90</p>
             <p class="parcelado">ou até 10x de R$ 27,99</p>
@@ -72,7 +74,7 @@
 
         <div class="card">
             <span class="tag frete">Frete grátis</span>
-            <img src="../src/4.jpg" alt="Kraken Gaming">
+            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Kraken Gaming">
             <h3>Razer Kraken Gaming Headset Multi Platform Preto</h3>
             <p class="price">R$ 989,10</p>
             <p class="parcelado">ou até 10x de R$ 109,90</p>
@@ -82,7 +84,7 @@
 
         <div class="card">
             <span class="tag frete">Frete grátis</span>
-            <img src="../src/4.jpg" alt="Mouse Viper">
+            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Mouse Viper">
             <h3>Razer Viper 16k Ambidestro Com Fio Ulraleve</h3>
             <p class="price">R$ 509,15</p>
             <p class="parcelado">ou até 10x de R$ 59,90</p>

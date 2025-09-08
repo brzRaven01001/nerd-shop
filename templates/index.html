@@ -18,7 +18,7 @@
       <a href="perifericos.html" class="espcs">Periféricos</a>
       <a href="console.html" class="espcs">Console</a>
       <a href="suporte.html" class="espcs">Suporte</a>
-      <a href="cadastro.html" class="espcs">Cadastrar Produto</a>
+      <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
     </div>
 
     <div class="barrapesquisa">
@@ -33,7 +33,7 @@
             <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
             <div class="menudropdown" id="menudropdown">
                 <a href="../login/login.html" class="botaomenu">login</a> 
-                <a href="../cadastro/cadastro.html" class="botaomenu">cadastro</a>
+                <a href="{{ url_for('cadastro') }}"  class="botaomenu">cadastro</a>
             </div>
         </div>
     </div>

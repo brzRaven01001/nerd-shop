@@ -5,17 +5,18 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Cadastrar Produto</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='cadastro.css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cadastro.css') }}">
+    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src='../script/script.js'></script>
 </head>
 <body>
     <header class="headercima">
-    <div class="logo"><a href="index.html">NERDSHOP</a></div>
+       
+   <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
 
     <div class="extras">
       <a href="{{ url_for('pc') }}" class="espcs">PC</a>
-      <a href="{{ url_for('perifericos') }}" class="espcs">PC</a>
       <a href="console.html" class="espcs">Console</a>
       <a href="suporte.html" class="espcs">Suporte</a>
       <a href="cadastro.html" class="espcs">Cadastrar Produto</a>
@@ -49,7 +50,7 @@
   }
 </script>
 
-    <form action="/submit-product" method="post">
+    <form action="{{ url_for('submit_product') }}" method="post">
         <h1>Cadastrar Produto</h1> <br>
         <label for="product-name">Nome do Produto:</label><br>
         <input type="text" id="product-name" name="product-name" required>
