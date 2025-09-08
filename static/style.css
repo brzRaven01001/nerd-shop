@@ -1,11 +1,12 @@
 body{
     margin:0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
+    background: #ffffff;
 }
 
 .headercima{
     width: 100%;
-    background-color: #3b3437;
+    background-color: #000000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,11 +20,22 @@ body{
 }
 
 .logo{
-    color: rgb(18, 249, 1);
+    color: rgb(1, 26, 249);
     font-size: 24px;
     font-weight: bold;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+.logo a{
+    color: rgb(10, 255, 255);
+    text-decoration: none;
+}
+
+.logo a:hover{
+    color: #0cac9e;
+    transition: 0.3s;
+
+}
 .barrapesquisa{
     display: flex;
     flex:1;
@@ -41,7 +53,9 @@ body{
 
 .pesquisa{
     padding: 8px 12px;
-    background: rgb(103, 96, 189);
+    background: rgb(6, 204, 204);
+    color: rgb(255, 255, 255);
+    font-style: bold;
     border: none;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
@@ -58,7 +72,7 @@ body{
   width: 28px;
   height: 28px;
   object-fit: contain;
-  cursor: pointer;    
+  cursor: pointer;
 }
 
 .menu-container{
@@ -100,12 +114,17 @@ a {
   display: flex;
   gap: 140px;
   font-weight: 500;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.extras a:link,
-.extras a:visited {
-  color: #1eff00;    
+.extras a{
+  color: rgb(10, 255, 255);     
   text-decoration: none;
+}
+
+.extras a:hover{
+  color: #0cac9e;
+  transition: 0.3s;
 }
 /* fim do header*/
 
@@ -189,7 +208,7 @@ html, body {
 .footer {
   padding: 20px;
   text-align: center;
-  background: #111;
+  background: #000000;
   font-size: 0.9rem;
   color: #888;
 }

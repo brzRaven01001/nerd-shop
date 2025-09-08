@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"> 
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NERDSHOP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header class="headercima">
+    <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+
+    <div class="extras">
+      <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+      <a href="perifericos.html" class="espcs">Periféricos</a>
+      <a href="console.html" class="espcs">Console</a>
+      <a href="suporte.html" class="espcs">Suporte</a>
+      <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+    </div>
+
+    <div class="barrapesquisa">
+        <input type="text" placeholder="BUSCAR">
+        <button class="pesquisa">OK</button>
+    </div>
+
+    <div class="acoes-header">
+        <img src="{{ url_for('static', filename='src/1.png') }}" alt="carrinho" class="iconheader">
+        <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+        <div class="menu-container">
+            <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+            <div class="menudropdown" id="menudropdown">
+                <a href="../login/login.html" class="botaomenu">login</a> 
+                <a href="{{ url_for('cadastro') }}"  class="botaomenu">cadastro</a>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+</header>
+
+<script> <!--dropdown-->
+  function toggleMenu() {
+    const menu = document.getElementById('menudropdown');
+    menu.classList.toggle('show');
+  }
+</script>
+<!-- FIM DO HEADER -->
+
+  <div class="foto">
+    <img src="{{ url_for('static', filename='src/3.jpg') }}" alt="pc" class="fotos kenburns">
+    <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="console" class="fotos">
+  </div>
+  <!-- fotos perifericos-->
+
+  <div class="grid">
+    <img src="{{ url_for('static', filename='src/5.jpg') }}" alt="teclado">
+    <img src="{{ url_for('static', filename='src/6.jpg') }}" alt="mouse">
+    <img src="{{ url_for('static', filename='src/7.jpg') }}" alt="fone">
+    <img src="{{ url_for('static', filename='src/8.jpg') }}" alt="controle">
+  </div>
+
+
+  <footer class="footer">
+    <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
+  </footer>
+</body>
+</html>
