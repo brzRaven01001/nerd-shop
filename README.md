@@ -7,12 +7,12 @@
 ---
 
 ## Integrantes
-Ana Cláudia Monteiro Misquita
-Alan Araújo
-Fernanda Figueiredo
-Kauan Pedrosa Marques
-Murilo Leone Fernandes
-Vinícios de Lima Basteiro
+Ana Cláudia Monteiro Misquita, 
+Alan Araújo, 
+Fernanda Figueiredo, 
+Kauan Pedrosa Marques, 
+Murilo Leone Fernandes, 
+Vinícios de Lima Basteiro, 
 
 ---
 
