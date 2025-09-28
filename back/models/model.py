@@ -1,40 +1,27 @@
-import sqlite3
 import os
+import psycopg2
 
 caminho_banco = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'produto.db')
-
-def cria_tabela_produtos():
-    conn = sqlite3.connect("back/produto.db")  
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS produtos (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            descricao TEXT NOT NULL,
-            preco REAL NOT NULL,
-            categoria TEXT NOT NULL,
-            estoque INTEGER NOT NULL,
-            imagem_url TEXT NOT NULL
-        )
-    """)
-    conn.commit()
-    conn.close()
-    print("Tabela 'produtos' criada com sucesso!")
-
 
 def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
     try:
         preco = float(preco)
         estoque = int(estoque)
-        print("Tentando inserir:", nome, descricao, preco, categoria, estoque, imagem_url)
-        print("Caminho do banco:", caminho_banco)
-
-        conn = sqlite3.connect(caminho_banco)
+       
+        conn = psycopg2.connect(
+            dbname="postgres",  
+            user="postgres",      
+            password="Semsenh4?",  
+            host="localhost",       
+            port="5432"             
+        )
         cursor = conn.cursor()
         cursor.execute("""
-            INSERT INTO produtos (nome, descricao, preco, categoria, estoque, imagem_url)
-            VALUES (?, ?, ?, ?, ?, ?)
+             INSERT INTO produtos (nome, descricao, preco, categoria, estoque, imagem_url)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """, (nome, descricao, preco, categoria, estoque, imagem_url))
+        
+        
         conn.commit()
         conn.close()
         print("Produto inserido com sucesso:", nome)
@@ -42,3 +29,26 @@ def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
     except Exception as e:
         print("Erro ao inserir produto:", e)
         return {"error": str(e)}
+    
+
+def buscaProdutoSQL():
+    try:
+        conn = psycopg2.connect(
+            dbname="loja",  
+            user="postgres",      
+            password="Semsenh4?",  
+            host="localhost",       
+            port="5432"             
+        )
+        cur = conn.cursor()
+        cur.execute("SELECT nome, descricao, preco, categoria, estoque, imagem_url FROM produtos;")
+    
+        resultados = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        return resultados
+
+    except Exception as e:
+        print("Erro ao buscar produtos:", e)
+        return []
