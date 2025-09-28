@@ -1,18 +1,18 @@
 import psycopg2
 
-
 def cria_banco():
     conn = psycopg2.connect(
-        dbname="postgres",  
+        dbname="postgres",   
         user="postgres",
-        password="sua_senha",
+        password="Semsenh4?",
         host="localhost",
         port="5432"
     )
-    conn.autocommit = True 
+    conn.autocommit = True
     cursor = conn.cursor()
 
     cursor.execute("CREATE DATABASE loja")
+
     cursor.close()
     conn.close()
     print("Banco 'loja' criado com sucesso!")
@@ -21,7 +21,7 @@ def cria_banco():
 def cria_tabela_produtos():
     try:
         conn = psycopg2.connect(
-            dbname="postgres",  
+            dbname="loja",  
             user="postgres",      
             password="Semsenh4?",  
             host="localhost",       
@@ -49,8 +49,6 @@ def cria_tabela_produtos():
     except Exception as e:
         print("Erro ao criar tabela:", e)
 
-
 if __name__ == "__main__":
     cria_banco()
     cria_tabela_produtos()
-

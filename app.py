@@ -36,5 +36,6 @@ def submit_product():
         return f"Erro ao cadastrar produto: {resultado['error']}", 500
     
     return redirect(url_for('index'))
+
 if __name__ == "__main__":
     app.run(debug=True)

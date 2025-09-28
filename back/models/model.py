@@ -3,13 +3,14 @@ import psycopg2
 
 caminho_banco = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'produto.db')
 
+
 def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
     try:
         preco = float(preco)
         estoque = int(estoque)
        
         conn = psycopg2.connect(
-            dbname="postgres",  
+            dbname="loja",  
             user="postgres",      
             password="Semsenh4?",  
             host="localhost",       
