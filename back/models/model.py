@@ -31,7 +31,7 @@ def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
         return {"error": str(e)}
     
 
-def buscaProdutoSQL():
+def getProdutos():
     try:
         conn = psycopg2.connect(
             dbname="loja",  
