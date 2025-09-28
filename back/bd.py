@@ -42,6 +42,7 @@ def cria_tabela_produtos():
         """)
 
         conn.commit()
+        conn.set_client_encoding('UTF8')
         cursor.close()
         conn.close()
         print("Tabela 'produtos' criada com sucesso no PostgreSQL!")

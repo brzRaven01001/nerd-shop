@@ -2,23 +2,25 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8"> 
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NERDSHOP</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <header class="headercima">
-    <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+    <div class="logo">
+        <a href="{{ url_for('index') }}">NERDSHOP</a>
+    </div>
 
     <div class="extras">
-      <a href="{{ url_for('pc') }}" class="espcs">PC</a>
-      <a href="perifericos.html" class="espcs">Periféricos</a>
-      <a href="console.html" class="espcs">Console</a>
-      <a href="suporte.html" class="espcs">Suporte</a>
-      <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+        <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+        <a href="perifericos.html" class="espcs">Periféricos</a>
+        <a href="console.html" class="espcs">Console</a>
+        <a href="suporte.html" class="espcs">Suporte</a>
+        <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
     </div>
 
     <div class="barrapesquisa">
@@ -28,45 +30,76 @@
 
     <div class="acoes-header">
         <img src="{{ url_for('static', filename='src/1.png') }}" alt="carrinho" class="iconheader">
-        <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+
         <div class="menu-container">
             <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
             <div class="menudropdown" id="menudropdown">
-                <a href="../login/login.html" class="botaomenu">login</a> 
-                <a href="{{ url_for('cadastro') }}"  class="botaomenu">cadastro</a>
+                <a href="../login/login.html" class="botaomenu">Login</a> 
+                <a href="{{ url_for('cadastro') }}" class="botaomenu">Cadastro</a>
             </div>
         </div>
     </div>
-
-    </div>
-
-
 </header>
 
-<script> <!--dropdown-->
-  function toggleMenu() {
-    const menu = document.getElementById('menudropdown');
-    menu.classList.toggle('show');
-  }
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('menudropdown');
+        menu.classList.toggle('show');
+    }
 </script>
-<!-- FIM DO HEADER -->
+<!-- ===== FIM HEADER ===== -->
 
-  <div class="foto">
+<!-- ===== BANNER ===== -->
+<div class="foto">
     <img src="{{ url_for('static', filename='src/3.jpg') }}" alt="pc" class="fotos kenburns">
-    <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="console" class="fotos">
-  </div>
-  <!-- fotos perifericos-->
+</div>
 
-  <div class="grid">
-    <img src="{{ url_for('static', filename='src/5.jpg') }}" alt="teclado">
-    <img src="{{ url_for('static', filename='src/6.jpg') }}" alt="mouse">
-    <img src="{{ url_for('static', filename='src/7.jpg') }}" alt="fone">
-    <img src="{{ url_for('static', filename='src/8.jpg') }}" alt="controle">
-  </div>
+<!-- ===== FLASH MESSAGES ===== -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for msg in messages %}
+        <p>{{ msg }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
+<!-- ===== SEÇÃO DE PRODUTOS ===== -->
+<section>
+    <h2 class="produtos-title">Produtos em Destaque</h2>
+    <div class="produtos-container">
+        {% for produto in produtos %}
+        <div class="produto-card">
+            {% if produto[5] %}
+                <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+            {% endif %}
+            <h3>{{ produto[0] }}</h3>
+            <p>{{ produto[1] }}</p>
+            <p><strong>R$ {{ produto[2] }}</strong></p>
+            <p>Categoria: {{ produto[3] }}</p>
+            <p>Estoque: {{ produto[4] }}</p>
 
-  <footer class="footer">
+            <!-- BOTÕES -->
+            <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
+                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
+                <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
+            </form>
+            <form action="{{ url_for('comprar_produto') }}" method="POST">
+                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
+                <button type="submit" class="btn-comprar">Comprar Agora</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
     <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
-  </footer>
+</footer>
+
 </body>
 </html>
