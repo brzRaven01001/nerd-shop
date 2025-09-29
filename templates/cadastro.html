@@ -94,36 +94,7 @@
         </div>
     </form>
 
-    <!-- Tabela de produtos cadastrados -->
-    <h2>Produtos Cadastrados</h2>
-    <table border="1" cellpadding="5">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Categoria</th>
-                <th>Estoque</th>
-                <th>Imagem</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for produto in produtos %}
-            <tr>
-                <td>{{ produto[0] }}</td>
-                <td>{{ produto[1] }}</td>
-                <td>R$ {{ produto[2] }}</td>
-                <td>{{ produto[3] }}</td>
-                <td>{{ produto[4] }}</td>
-                <td>
-                    {% if produto[5] %}
-                        <img src="{{ produto[5] }}" alt="Imagem" style="max-width:100px;">
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    
 
 </body>
 </html>
