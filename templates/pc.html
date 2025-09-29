@@ -40,57 +40,36 @@
         }
         </script>
     <body>
-    <div class="container">
-        <div class="card">
-            <span class="tag frete">Frete grátis</span>
-            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Headset Razer">
-            <h3>Razer Blackshark V2 X Com Fio 7.1 Surround Sound - Preto</h3>
-            <p class="price">R$ 1.079,10</p>
-            <p class="parcelado">ou até 10x de R$ 119,90</p>
-            <button>COMPRAR</button>
+
+<section>
+<div class="produtos-container">
+        {% for produto in produtos %}
+        <div class="produto-card">
+            {% if produto[5] %}
+                <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+            {% endif %}
+            <h3>{{ produto[0] }}</h3>
+            <p>{{ produto[1] }}</p>
+            <p><strong>R$ {{ produto[2] }}</strong></p>
+            <p>Categoria: {{ produto[3] }}</p>
+            <p>Estoque: {{ produto[4] }}</p>
+
+            <!-- BOTÕES -->
+            <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
+                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
+                <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
+            </form>
+            <form action="{{ url_for('comprar_produto') }}" method="POST">
+                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
+                <button type="submit" class="btn-comprar">Comprar Agora</button>
+            </form>
         </div>
-
-
-        <div class="card">
-            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Mouse Razer">
-
-            <h3>Razer Deathadder V2 X Hyperspeed</h3>
-            <p class="old-price">R$ 549,90</p>
-            <p class="price desconto">R$ 449,90 <span>-18%</span></p>
-            <p class="parcelado">ou até 10x de R$ 44,98</p>
-            <span class="timer">TERMINA EM: 06D 17:09:07</span>
-            <button>COMPRAR</button>
-        </div>
-
-
-        <div class="card">
-            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Fone Razer">
-            <h3>Razer Hammerhead Pro V2 Fone Intra-auricular</h3>
-            <p class="price">R$ 279,90</p>
-            <p class="parcelado">ou até 10x de R$ 27,99</p>
-            <button>COMPRAR</button>
-        </div>
-
-
-        <div class="card">
-            <span class="tag frete">Frete grátis</span>
-            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Kraken Gaming">
-            <h3>Razer Kraken Gaming Headset Multi Platform Preto</h3>
-            <p class="price">R$ 989,10</p>
-            <p class="parcelado">ou até 10x de R$ 109,90</p>
-            <button>COMPRAR</button>
-        </div>
-
-
-        <div class="card">
-            <span class="tag frete">Frete grátis</span>
-            <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="Mouse Viper">
-            <h3>Razer Viper 16k Ambidestro Com Fio Ulraleve</h3>
-            <p class="price">R$ 509,15</p>
-            <p class="parcelado">ou até 10x de R$ 59,90</p>
-            <button>COMPRAR</button>
-        </div>
+        {% endfor %}
     </div>
+
+</section>
 </body>
 </html>
 

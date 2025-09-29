@@ -8,8 +8,6 @@ app = Flask(__name__)
 app.secret_key = 'Semsenh4?'
 app.register_blueprint(url)
 
-
-
 @app.route("/")
 def index():
     produtos = getProdutos()  
@@ -17,7 +15,8 @@ def index():
 
 @app.route('/pc')
 def pc():
-    return render_template('pc.html')
+    produtos = getProdutos()  
+    return render_template('pc.html', produtos=produtos)
 
 @app.route("/adicionar_carrinho", methods=["POST"])
 def adicionar_carrinho():
