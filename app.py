@@ -12,7 +12,7 @@ app.register_blueprint(url)
 
 @app.route("/")
 def index():
-    produtos = getProdutos()  # pega todos os produtos cadastrados
+    produtos = getProdutos()  
     return render_template("index.html", produtos=produtos)
 
 @app.route('/pc')
@@ -43,7 +43,7 @@ def cadastro():
 
 @app.route("/produto/<int:produto_id>")
 def produto_detalhe(produto_id):
-    produtos = getProdutos()  # sua função que retorna todos os produtos
+    produtos = getProdutos() 
     if produto_id < 0 or produto_id >= len(produtos):
         return "Produto não encontrado", 404
     produto = produtos[produto_id]

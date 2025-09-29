@@ -162,16 +162,16 @@ html, body {
 @keyframes kenburns-top {
     0% {
         transform: scale(1) translateY(0);
-        transform-origin: 50% 16%;
+        transform-origin: 10% 9%;
     }
     100% {
-        transform: scale(1.25) translateY(-15px);
+        transform: scale(1.04) translateY(-10px);
         transform-origin: top;
     }
 }
 
 .kenburns {
-    animation: kenburns-top 10s ease-in-out infinite alternate;
+    animation: kenburns-top 7s ease-in-out infinite alternate;
 }
 
 /* ====== PRODUTOS ====== */
