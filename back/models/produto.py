@@ -12,7 +12,7 @@ def insereProdutoSQL(nome, descricao, preco, categoria, estoque, imagem_url):
         conn = psycopg2.connect(
             dbname="loja",  
             user="postgres",      
-            password="Semsenh4?",  
+            password="postgres123",  
             host="localhost",       
             port="5432"             
         )
@@ -37,7 +37,7 @@ def getProdutos():
         conn = psycopg2.connect(
             dbname="loja",  
             user="postgres",      
-            password="Semsenh4?",  
+            password="postgres123",  
             host="localhost",       
             port="5432"             
         )

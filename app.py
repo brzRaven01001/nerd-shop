@@ -1,12 +1,14 @@
 from flask import  Flask, render_template, request, redirect, url_for, session, flash
 from back.controllers.cadastro_controller import url
-from back.models.model import insereProdutoSQL, getProdutos
-
+from back.controllers.cadastro_usuario import url_usuario
+from back.models.produto import insereProdutoSQL, getProdutos
+from back.models.usuario import cadastra_usuario, autentica_usuario
 
 
 app = Flask(__name__)
-app.secret_key = 'Semsenh4?'
+app.secret_key = 'postgres123'
 app.register_blueprint(url)
+app.register_blueprint(url_usuario)
 
 @app.route("/")
 def index():
@@ -39,6 +41,33 @@ def comprar_produto():
 def cadastro():
     produtos = getProdutos()  
     return render_template("cadastro.html", produtos=produtos)
+
+@app.route("/cadastro_usuario", methods=["GET", "POST"])
+def cadastro_usuario():
+    if request.method == "POST":
+        nome = request.form.get("nome")
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+        if cadastra_usuario(nome, email, senha):
+            return redirect(url_for("login"))
+        else:
+            return "Erro ao cadastrar usuário", 500
+    return render_template("cadastro_usuario.html")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        senha = request.form
+        usuario = autentica_usuario(email, senha)
+        if usuario:
+            session["usuario"] = usuario
+            return redirect(url_for("index"))
+        else:
+            return "Email ou senha incorretos!"
+    return render_template("login.html")
+
+
 
 @app.route("/produto/<int:produto_id>")
 def produto_detalhe(produto_id):
