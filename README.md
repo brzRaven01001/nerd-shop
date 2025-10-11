@@ -56,7 +56,7 @@ nerd-shop/
 - JavaScript  
 - Jinja2 (Templates Flask)
 
-### 🔹 Banco de Dados (futuro)
+### 🔹 Banco de Dados
 - **PostgreSQL**
 
 ---
