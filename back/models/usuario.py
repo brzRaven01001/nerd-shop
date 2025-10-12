@@ -2,8 +2,12 @@ import psycopg2
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_connection():
-    dsn = "dbname=nerdshop user=postgres password=postgres123 host=localhost port=5432"
-    return psycopg2.connect(dsn)
+    dsn = "dbname=loja user=postgres password=postgres123 host=localhost port=5432"
+    conn = psycopg2.connect(dsn)
+    conn.set_client_encoding('UTF8')  # força UTF-8 na conexão
+    return conn
+
+
     
 def cadastra_usuario(nome, email, senha):
     conn = get_connection()

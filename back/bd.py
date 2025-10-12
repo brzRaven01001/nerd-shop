@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+
 import psycopg2
 
 def cria_banco():
+
     conn = psycopg2.connect(
         dbname="postgres",   
         user="postgres",
@@ -9,9 +12,12 @@ def cria_banco():
         port="5432"
     )
     conn.autocommit = True
+    conn.set_client_encoding('UTF8')
+
     cursor = conn.cursor()
 
-    cursor.execute("CREATE DATABASE loja")
+    cursor.execute("CREATE DATABASE loja ENCODING 'UTF8' LC_COLLATE='pt_BR.UTF-8' LC_CTYPE='pt_BR.UTF-8' TEMPLATE template0")
+
 
     cursor.close()
     conn.close()

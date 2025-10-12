@@ -6,17 +6,13 @@ url_usuario = Blueprint("url_usuario", __name__)
 @url_usuario.route("/cadastro_usuario", methods=["POST"])
 def post_user():
     try:
-        data = request.get_json()
-        
-        if not data:
-            return jsonify({"error": "Dados JSON necessários"}), 400
-            
+        data = request.get_json(force=True)
         nome = data.get('nome')
         email = data.get('email')
         senha = data.get('senha')
-        
         if not all([nome, email, senha]):
-            return jsonify({"error": "Todos os campos são obrigatórios"}), 400
+            return jsonify({"error": "Dados JSON necessários"}), 400
+            
         
         success = cadastra_usuario(nome, email, senha)
         
@@ -27,6 +23,8 @@ def post_user():
             
     except Exception as e:
         return jsonify({"error": f"Erro interno: {str(e)}"}), 500
+
+
 
 @url_usuario.route("/login", methods=["GET", "POST"])
 def login():
