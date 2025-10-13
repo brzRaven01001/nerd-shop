@@ -1,4 +1,4 @@
-from flask import  Flask, render_template, request, redirect, url_for, session, flash
+from flask import  Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from back.controllers.cadastro_controller import url
 from back.controllers.cadastro_usuario import url_usuario
 from back.models.produto import insereProdutoSQL, getProdutos
@@ -55,18 +55,21 @@ def cadastro_usuario():
             return "Erro ao cadastrar usuário", 500
     return render_template("cadastro_usuario.html")
 
+
 @app.route("/login_usuario", methods=["GET", "POST"])
 def login_usuario():
     if request.method == "POST":
         email = request.form.get("email")
         senha = request.form.get("senha")
+
         usuario = autentica_usuario(email, senha)
         
         if usuario:
             session["usuario"] = usuario
-            return redirect(url_for("index"))
+            return jsonify({"success": True, "redirect": url_for("index")})
         else:
-            return "Email ou senha incorretos!"
+            return jsonify({"success": False, "message": "Email ou senha incorretos!"})
+            
     return render_template("login_usuario.html")
 
 

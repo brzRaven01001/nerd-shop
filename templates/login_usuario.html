@@ -9,7 +9,8 @@
 </head>
 <body>
 
-<form action="{{ url_for('login_usuario') }}" method="post">
+<form id="loginForm">
+
 <div class="wrapper">
   <div class="login_box">
     <div class="login-header">
@@ -49,6 +50,27 @@
   </div>
 </div>
 </form> 
-  
+  <script>
+
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    const response = await fetch("{{ url_for('login_usuario') }}", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+        alert("Login realizado com sucesso!");
+        window.location.href = data.redirect; 
+    } else {
+        alert(data.message);
+    }
+});
+</script>
 </body>
 </html>
