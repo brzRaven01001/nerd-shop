@@ -6,17 +6,14 @@
 }
 
 :root {
-  --primary-color: #c6c3c3;
-  --second-color: #ffffff;
+  --primary-color: #00ffff;
+  --second-color: #1eff00;
   --black-color: #000000;
 }
 
 body {
-  background-image: url("Pokemon.gif");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: linear-gradient(to bottom right, #000000, #3a3a3a);
+  min-height: 100vh;
 }
 
 a {
@@ -88,7 +85,7 @@ a:hover {
   height: 30px;
   border-top-left-radius: 50%;
   background: transparent;
-  box-shadow: -15px 0 0 0 var(--primary-color); /* Removed space before --primary-color */
+  box-shadow: -15px 0 0 0 var(--primary-color);
 }
 
 .input_box {
@@ -96,8 +93,6 @@ a:hover {
   display: flex;
   flex-direction: column;
   margin: 20px 0;
-
-
 }
 
 .input-field {
@@ -120,20 +115,12 @@ a:hover {
   position: absolute;
   top: 15px;
   left: 20px;
-  transition: 0.2s;
-}
-
-.label {
-  position: absolute;
-  top: 15px;
-  left: 20px;
-  transition: 0.3s ease; /* Transição suave */
-  pointer-events: none; /* Evita que a label interfira com o clique */
+  transition: 0.3s ease;
+  pointer-events: none;
 }
 
 .input-field:focus ~ .label,
 .input-field:not(:placeholder-shown) ~ .label {
-  /* Label sobe quando o campo é focado ou tem texto preenchido */
   top: -10px;
   left: 20px;
   font-size: 14px;
@@ -142,6 +129,7 @@ a:hover {
   color: var(--black-color);
   padding: 0 10px;
 }
+
 .icon {
   position: absolute;
   top: 18px;
@@ -155,11 +143,10 @@ a:hover {
   font-size: 15px;
 }
 
-
 .input-submit {
   width: 100%;
   height: 50px;
-  background: #ececec;
+  background: var(--second-color);
   font-size: 16px;
   font-weight: 500;
   border: none;
@@ -169,7 +156,7 @@ a:hover {
 }
 
 .input-submit:hover {
-  background: var(--second-color);
+  background: var(--primary-color);
   animation: pulse 0.5s ease-in-out;
 }
 
@@ -189,7 +176,4 @@ a:hover {
   .login_box {
     padding: 7.5em 1.5em 4em 1.5em;
   }
-
-  
-
 }

@@ -1,4 +1,4 @@
-/* ====== BASE ====== */
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,7 +11,7 @@ html, body {
     overflow-x: hidden;
 }
 
-/* ====== HEADER ====== */
+
 .headercima {
     width: 100%;
     background-color: #000000;
@@ -151,7 +151,7 @@ html, body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ====== BANNER ====== */
+
 .foto img {
     width: 100vw;
     height: 100vh;
@@ -174,7 +174,7 @@ html, body {
     animation: kenburns-top 7s ease-in-out infinite alternate;
 }
 
-/* ====== PRODUTOS ====== */
+
 .produtos-container {
     display: flex;
     flex-wrap: wrap;
@@ -249,7 +249,7 @@ html, body {
     background: #1e7e34;
 }
 
-/* ====== GRID DE IMAGENS ====== */
+
 .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -272,7 +272,7 @@ html, body {
     transform: scale(1.05);
 }
 
-/* ====== FOOTER ====== */
+
 .footer {
     padding: 20px;
     text-align: center;

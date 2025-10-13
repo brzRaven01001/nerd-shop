@@ -3,7 +3,7 @@ from back.models.usuario import cadastra_usuario, autentica_usuario
 
 url_usuario = Blueprint("url_usuario", __name__)
 
-@url_usuario.route("/cadastro_usuario", methods=["POST"])
+@url_usuario.route("/cadastro-usuario", methods=["POST"])
 def post_user():
     try:
         data = request.get_json(force=True)
@@ -26,7 +26,7 @@ def post_user():
 
 
 
-@url_usuario.route("/login", methods=["GET", "POST"])
+@url_usuario.route("/login-usuario", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -38,7 +38,7 @@ def login():
             return redirect(url_for("index"))
         else:
             return "Email ou senha incorretos!"
-    return render_template("login.html")
+    return render_template("login_usuario.html")
 
 @url_usuario.route("/logout")
 def logout():

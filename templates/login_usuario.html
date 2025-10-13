@@ -5,11 +5,10 @@
   <title>Login</title>
   <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
-<link rel="stylesheet" href="../static/bbb.css">
-<script src="login.js"></script>
+<link rel="stylesheet" href="../static/login_usuario.css">
 </head>
 <body>
-<!-- partial:index.partial.html -->
+
 <div class="wrapper">
   <div class="login_box">
     <div class="login-header">
@@ -44,11 +43,11 @@
     </div>
 
     <div class="register">
-      <span>Não possui conta? <a href="../cadastro/cadastro.html">Registre-se agora!</a></span>
+      <span>Não possui conta? <a href="{{ url_for('cadastro_usuario') }}">Registre-se agora!</a></span>
     </div>
   </div>
 </div>
-<!-- partial -->
+
   
 </body>
 </html>

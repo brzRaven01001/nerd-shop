@@ -42,6 +42,7 @@ def cadastro():
     produtos = getProdutos()  
     return render_template("cadastro.html", produtos=produtos)
 
+
 @app.route("/cadastro_usuario", methods=["GET", "POST"])
 def cadastro_usuario():
     if request.method == "POST":
@@ -49,13 +50,13 @@ def cadastro_usuario():
         email = request.form.get("email")
         senha = request.form.get("senha")
         if cadastra_usuario(nome, email, senha):
-            return redirect(url_for("login"))
+            return redirect(url_for("cadastro_usuario"))
         else:
             return "Erro ao cadastrar usuário", 500
     return render_template("cadastro_usuario.html")
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
+@app.route("/login_usuario", methods=["GET", "POST"])
+def login_usuario():
     if request.method == "POST":
         email = request.form.get("email")
         senha = request.form
@@ -65,7 +66,7 @@ def login():
             return redirect(url_for("index"))
         else:
             return "Email ou senha incorretos!"
-    return render_template("login.html")
+    return render_template("login_usuario.html")
 
 
 

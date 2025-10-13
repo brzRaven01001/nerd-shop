@@ -34,8 +34,8 @@
         <div class="menu-container">
             <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
             <div class="menudropdown" id="menudropdown">
-                <a href="../login/login.html" class="botaomenu">Login</a> 
-                <a href="{{ url_for('cadastro') }}" class="botaomenu">Cadastro</a>
+                <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
+                <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
             </div>
         </div>
     </div>
