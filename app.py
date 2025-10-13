@@ -50,7 +50,7 @@ def cadastro_usuario():
         email = request.form.get("email")
         senha = request.form.get("senha")
         if cadastra_usuario(nome, email, senha):
-            return redirect(url_for("cadastro_usuario"))
+            return redirect(url_for("login_usuario"))
         else:
             return "Erro ao cadastrar usuário", 500
     return render_template("cadastro_usuario.html")
@@ -59,8 +59,9 @@ def cadastro_usuario():
 def login_usuario():
     if request.method == "POST":
         email = request.form.get("email")
-        senha = request.form
+        senha = request.form.get("senha")
         usuario = autentica_usuario(email, senha)
+        
         if usuario:
             session["usuario"] = usuario
             return redirect(url_for("index"))

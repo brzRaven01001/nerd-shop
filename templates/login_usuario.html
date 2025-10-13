@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<form action="{{ url_for('login_usuario') }}" method="post">
 <div class="wrapper">
   <div class="login_box">
     <div class="login-header">
@@ -16,14 +17,14 @@
     </div>
 
     <div class="input_box">
-      <input type="text" id="user" class="input-field" required>
-      <label for="user" class="label">Usuário</label>
+      <input type="text" name="email" id="email" class="input-field" required>
+      <label for="email" class="label">Usuário</label>
       <i class="bx bx-user icon"></i>
     </div>
 
     <div class="input_box">
-      <input type="password" id="pass" class="input-field" required>
-      <label for="pass" class="label">Senha</label>
+      <input type="password" name="senha" id="senha" class="input-field" required>
+      <label for="senha" class="label">Senha</label>
       <i class="bx bx-lock-alt icon"></i>
     </div>
 
@@ -38,16 +39,16 @@
       </div>
     </div>
 
-    <div class="input_box">
-      <input type="submit" class="input-submit" value="Login" onclick="loginUsuario()"/>
-    </div>
+     <div class="submit-button">
+            <input type="submit" value="Cadastrar Produto">
+      </div>
 
     <div class="register">
       <span>Não possui conta? <a href="{{ url_for('cadastro_usuario') }}">Registre-se agora!</a></span>
     </div>
   </div>
 </div>
-
+</form> 
   
 </body>
 </html>
