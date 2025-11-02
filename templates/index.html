@@ -86,7 +86,7 @@
                 <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
                 <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
             </form>
-            <form action="{{ url_for('comprar_produto') }}" method="POST">
+            <form action="{{ url_for('comprar_agora') }}" method="POST">
                 <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
                 <button type="submit" class="btn-comprar">Comprar Agora</button>
             </form>
