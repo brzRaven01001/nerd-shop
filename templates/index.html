@@ -25,7 +25,10 @@
     </div>
 
     <div class="acoes-header">
-        <img src="{{ url_for('static', filename='src/1.png') }}" alt="carrinho" class="iconheader">
+        <a href="{{ url_for('ver_carrinho') }}" 
+           style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+           🛒 Carrinho
+        </a>
 
         <div class="menu-container">
             <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
@@ -43,6 +46,20 @@ function toggleMenu() {
     menu.classList.toggle('show');
 }
 </script>
+
+<div class="foto">
+    <img src="{{ url_for('static', filename='src/3.jpg') }}" alt="pc" class="fotos kenburns">
+</div>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for msg in messages %}
+        <p>{{ msg }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
 <section>
     <h2 class="produtos-title">Produtos em Destaque</h2>
