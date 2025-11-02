@@ -5,184 +5,174 @@
     font-family: "Poppins", sans-serif;
 }
 
-body{
-    margin:0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana;
-    background-image: url(src/background-cdprodutos.jpg);
-    background-repeat: no-repeat; 
-    background-position: center;   
-    background-size: cover;      
+:root {
+    --primary-color: #00ffff;
+    --second-color: #1eff00;
+    --black-color: #000000;
+    --gray-color: #1a1a1a;
+    --text-color: #ffffff;
 }
 
-.headercima{
+body {
+    background: url("src/cadastro_produto.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+
+.headercima {
     width: 100%;
-    background-color: #000000;
+    background-color: var(--black-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 50px 12px 30px;
+    padding: 12px 50px;
     position: relative;
     z-index: 1000;
 }
 
-.acoes-header{
-    margin-right: 50px;
-}
-
-.logo{
-    color: rgb(1, 26, 249);
+.logo a {
+    color: var(--primary-color);
     font-size: 24px;
     font-weight: bold;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.logo a{
-    color: rgb(10, 255, 255);
     text-decoration: none;
 }
 
-.logo a:hover{
-    color: #0cac9e;
+.logo a:hover {
+    color: var(--second-color);
     transition: 0.3s;
-
-}
-.barrapesquisa{
-    display: flex;
-    flex:1;
-    max-width: 30px;
-    margin: 0 20px;
 }
 
-.barrapesquisa input {
-    flex: 1;
-    padding: 8px 10px;
-    border: none;
-    border-radius: 5px 0 0 5px;
-    outline: none;
+.extras a {
+    color: var(--primary-color);
+    margin-left: 20px;
+    text-decoration: none;
 }
 
-.pesquisa{
-    padding: 8px 12px;
-    background: rgb(6, 204, 204);
-    color: rgb(255, 255, 255);
-    font-style: bold;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
+.extras a:hover {
+    color: var(--second-color);
+    transition: 0.3s;
 }
 
-.acoes-header{
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-right: 50px;
+
+.flash-messages {
+    width: 100%;
+    text-align: center;
+    margin: 10px auto;
 }
 
-.iconheader{
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  cursor: pointer;
+.flash {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--second-color);
+    color: var(--black-color);
+    border-radius: 20px;
+    font-weight: bold;
+    animation: fadeIn 0.5s ease;
 }
 
-.menu-container{
-    position: relative;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.menudropdown{
-  display: none;
-  position: absolute;
-  top: 40px;
-  right: 0;
-  background:#282224;
-  border-radius: 8px;
-  padding: 10px;
-  flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  z-index: 999;
-}
-
-.menudropdown.show{
-    display:flex;
-}
-
-.botaomenu{
-  padding: 8px 12px;
-  background-color: #1eff00;
-  border: none;
-  color: rgb(0, 0, 0);
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-a {
-  text-decoration: none;
-}
-
-.extras {
-  display: flex;
-  gap: 140px;
-  font-weight: 500;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-.extras a{
-  color: rgb(10, 255, 255);     
-  text-decoration: none;
-}
-
-.extras a:hover{
-  color: #0cac9e;
-  transition: 0.3s;
-}
-/* fim do header*/
-
-html, body {
-  margin: 0;
-  padding: 0;    
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;  
-}
 
 form {
-  background: transparent;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 50px auto;
-
+    background: var(--gray-color);
+    padding: 25px;
+    border-radius: 25px;
+    max-width: 380px;
+    margin: 40px auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    transition: all 0.3s ease;
 }
 
-form input, form select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 7px;
+form:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-i {
-    position: absolute;
-    margin-left: -20px;
-    margin-top: 20px;
+form h1 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.6rem;
 }
+
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--primary-color);
+    border-radius: 14px;
+    background: var(--black-color);
+    color: var(--text-color);
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+form textarea {
+    resize: none;
+    min-height: 80px; 
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--second-color);
+    box-shadow: 0 0 8px var(--second-color);
+}
+
 
 .submit-button input {
-    text-align: center;
-    background-color:#ffffff;
-    color: rgb(0, 0, 0);
-    border-radius: 7px;
-}
-
-.submit-button input:hover{
-    transition: 0.3s;
-    background-color: #52c7a4;
+    background-color: var(--primary-color);
+    color: var(--black-color);
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 16px;
+    border: none;
     cursor: pointer;
+    transition: 0.3s;
+    font-size: 15px;
 }
 
-h1{
-    color: white
+.submit-button input:hover {
+    background-color: var(--second-color);
+    transform: scale(1.03);
+}
+
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    background: var(--black-color);
+    font-size: 0.9rem;
+    color: #888;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+
+@media only screen and (max-width: 768px) {
+    form {
+        max-width: 90%;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 20px;
+        gap: 8px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        font-size: 13px;
+        padding: 9px 10px;
+    }
 }
