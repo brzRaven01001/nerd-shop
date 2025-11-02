@@ -235,6 +235,11 @@ html, body {
 
 .btn-carrinho {
     background: #007bff;
+    color: #fff;
+}
+
+.img.iconheader {
+    background-color: rgb(63, 63, 63);
 }
 
 .btn-carrinho:hover {

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Carrinho</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='carrinho.css') }}">
+</head>
+<body>
+  <h1>🛒 Seu Carrinho</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th class="preco">Preço</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="tabela-carrinho">
+      <!-- Linhas dos itens serão adicionadas aqui -->
+    </tbody>
+  </table>
+
+  <div class="total" id="valor-total">Total: R$ 0,00</div>
+
+  <script>
+    // Exemplo de lista de itens (pode vir do Python via template)
+    const itens = [
+      { produto_nome: 'Camiseta', quantidade: 2, preco_unitario: 49.90 },
+      { produto_nome: 'Tênis', quantidade: 1, preco_unitario: 199.90 },
+      { produto_nome: 'Boné', quantidade: 1, preco_unitario: 59.90 }
+    ];
+
+    const tabela = document.getElementById('tabela-carrinho');
+    const total = document.getElementById('valor-total');
+
+    function atualizarCarrinho() {
+      tabela.innerHTML = '';
+      let soma = 0;
+
+      itens.forEach((item, i) => {
+        const subtotal = item.quantidade * item.preco_unitario;
+        soma += subtotal;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${item.produto_nome}</td>
+          <td>${item.quantidade}</td>
+          <td class="preco">R$ ${subtotal.toFixed(2)}</td>
+          <td class="lixeira" onclick="removerItem(${i})">🗑️</td>
+        `;
+        tabela.appendChild(tr);
+      });
+
+      total.textContent = 'Total: R$ ' + soma.toFixed(2);
+    }
+
+    function removerItem(index) {
+      itens.splice(index, 1);
+      atualizarCarrinho();
+    }
+
+    atualizarCarrinho();
+  </script>
+</body>
+</html>

@@ -150,3 +150,5 @@ def verificar_e_criar_tabelas():
 
 if __name__ == "__main__":
     verificar_e_criar_tabelas()
+
+
