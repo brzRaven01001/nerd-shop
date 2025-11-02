@@ -29,7 +29,9 @@
     </div>
 
     <div class="acoes-header">
-        <img src="{{ url_for('static', filename='src/1.png') }}" alt="carrinho" class="iconheader">
+        <button onclick="window.location.href='{{ url_for('ver_carrinho') }}'" style="cursor:pointer;">
+        🛒 Carrinho
+    </button>
 
         <div class="menu-container">
             <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
