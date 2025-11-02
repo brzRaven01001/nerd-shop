@@ -14,12 +14,10 @@
 }
 
 body {
-    background: url("src/fundo_produto.jpg") no-repeat center center fixed;
-    background-size: cover;
+    background: linear-gradient(to bottom right, #000000, #1a1a1a);
     color: var(--text-color);
     min-height: 100vh;
 }
-
 
 .headercima {
     width: 100%;
@@ -55,7 +53,6 @@ body {
     transition: 0.3s;
 }
 
-
 .flash-messages {
     width: 100%;
     text-align: center;
@@ -67,7 +64,7 @@ body {
     padding: 10px 20px;
     background: var(--second-color);
     color: var(--black-color);
-    border-radius: 20px;
+    border-radius: 5px;
     font-weight: bold;
     animation: fadeIn 0.5s ease;
 }
@@ -77,77 +74,80 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+.produto-detalhe-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
 
-form {
-    background: var(--gray-color);
-    padding: 25px;
-    border-radius: 25px;
-    max-width: 380px;
-    margin: 40px auto;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+.produto-detalhe-imagem img {
+    width: 400px;
+    max-width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.produto-detalhe-imagem img:hover {
+    transform: scale(1.05);
+}
+
+.produto-detalhe-info {
+    max-width: 500px;
     display: flex;
     flex-direction: column;
-    gap: 10px; 
-    transition: all 0.3s ease;
+    gap: 15px;
 }
 
-form:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-}
-
-form h1 {
+.produto-detalhe-info h1 {
+    font-size: 28px;
     color: var(--primary-color);
-    text-align: center;
-    margin-bottom: 10px;
-    font-size: 1.6rem;
 }
 
-
-form input,
-form select,
-form textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border: 2px solid var(--primary-color);
-    border-radius: 14px;
-    background: var(--black-color);
-    color: var(--text-color);
-    font-size: 14px;
-    outline: none;
-    transition: 0.3s;
+.produto-detalhe-info p {
+    font-size: 16px;
+    color: #ccc;
 }
 
-form textarea {
-    resize: none;
-    min-height: 80px; 
+.produto-detalhe-info strong {
+    color: var(--second-color);
+    font-size: 20px;
 }
 
-form input:focus,
-form select:focus,
-form textarea:focus {
-    border-color: var(--second-color);
-    box-shadow: 0 0 8px var(--second-color);
-}
-
-
-.submit-button input {
-    background-color: var(--primary-color);
-    color: var(--black-color);
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 16px;
+.btn-carrinho,
+.btn-comprar {
+    padding: 12px 20px;
     border: none;
+    border-radius: 8px;
+    font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 15px;
+    margin-top: 10px;
 }
 
-.submit-button input:hover {
+.btn-carrinho {
+    background-color: var(--primary-color);
+    color: var(--black-color);
+}
+
+.btn-carrinho:hover {
     background-color: var(--second-color);
-    transform: scale(1.03);
 }
 
+.btn-comprar {
+    background-color: var(--second-color);
+    color: var(--black-color);
+}
+
+.btn-comprar:hover {
+    background-color: var(--primary-color);
+}
 
 .footer {
     padding: 20px;
@@ -155,24 +155,20 @@ form textarea:focus {
     background: var(--black-color);
     font-size: 0.9rem;
     color: #888;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
 }
 
-
 @media only screen and (max-width: 768px) {
-    form {
-        max-width: 90%;
-        margin: 30px auto;
-        padding: 20px;
-        border-radius: 20px;
-        gap: 8px;
+    .produto-detalhe-container {
+        flex-direction: column;
+        align-items: center;
     }
 
-    form input,
-    form select,
-    form textarea {
-        font-size: 13px;
-        padding: 9px 10px;
+    .produto-detalhe-imagem img {
+        height: 300px;
+    }
+
+    .produto-detalhe-info {
+        max-width: 90%;
+        text-align: center;
     }
 }

@@ -6,14 +6,10 @@
     <title>NERDSHOP</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-
 <header class="headercima">
-    <div class="logo">
-        <a href="{{ url_for('index') }}">NERDSHOP</a>
-    </div>
+    <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
 
     <div class="extras">
         <a href="{{ url_for('pc') }}" class="espcs">PC</a>
@@ -42,54 +38,27 @@
 </header>
 
 <script>
-    function toggleMenu() {
-        const menu = document.getElementById('menudropdown');
-        menu.classList.toggle('show');
-    }
+function toggleMenu() {
+    const menu = document.getElementById('menudropdown');
+    menu.classList.toggle('show');
+}
 </script>
-
-
-
-<div class="foto">
-    <img src="{{ url_for('static', filename='src/3.jpg') }}" alt="pc" class="fotos kenburns">
-</div>
-
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="flash-messages">
-      {% for msg in messages %}
-        <p>{{ msg }}</p>
-      {% endfor %}
-    </div>
-  {% endif %}
-{% endwith %}
 
 <section>
     <h2 class="produtos-title">Produtos em Destaque</h2>
     <div class="produtos-container">
         {% for produto in produtos %}
         <div class="produto-card">
-            {% if produto[5] %}
-                <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
-            {% else %}
-                <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
-            {% endif %}
-            <h3>{{ produto[0] }}</h3>
-            <p>{{ produto[1] }}</p>
-            <p><strong>R$ {{ produto[2] }}</strong></p>
-            <p>Categoria: {{ produto[3] }}</p>
-            <p>Estoque: {{ produto[4] }}</p>
-
-
-            <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
-                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
-                <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
-            </form>
-            <form action="{{ url_for('comprar_agora') }}" method="POST">
-                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
-                <button type="submit" class="btn-comprar">Comprar Agora</button>
-            </form>
+            <a href="{{ url_for('produto_detalhe', produto_id=loop.index0) }}">
+                {% if produto[5] %}
+                    <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+                {% endif %}
+                <h3>{{ produto[0] }}</h3>
+                <p>{{ produto[1] }}</p>
+                <p><strong>R$ {{ produto[2] }}</strong></p>
+            </a>
         </div>
         {% endfor %}
     </div>
