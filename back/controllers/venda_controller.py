@@ -30,17 +30,17 @@ class VendaController:
             for item in itens_carrinho:
                 produto_encontrado = None
                 for produto in produtos_db:
-                    # Assumindo que o ID está disponível no item do carrinho
-                    if produto[0] == item.get('produto_id'):  # Ajuste
+                    
+                    if produto[0] == item.get('produto_id'):  
                         produto_encontrado = produto
                         break
                 
                 if not produto_encontrado:
                     return {"success": False, "message": f"Produto ID {item.get('produto_id')} não encontrado"}
                 
-                estoque = produto_encontrado[4]  # Ajuste o índice do estoque
-                preco = float(produto_encontrado[2])  # Ajuste o índice do preco
-                nome = produto_encontrado[0]  # Ajuste o índice do nome
+                estoque = produto_encontrado[4]  
+                preco = float(produto_encontrado[2])  
+                nome = produto_encontrado[0]  
                 
                 quantidade = item.get('quantidade', 1)
                 
@@ -60,7 +60,7 @@ class VendaController:
                     'subtotal': subtotal
                 })
             
-            # Criar venda no banco
+            
             venda_id = criar_venda(usuario_id, total_compra, itens_validados)
             
             if venda_id:
