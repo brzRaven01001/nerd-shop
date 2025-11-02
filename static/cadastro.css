@@ -14,7 +14,7 @@
 }
 
 body {
-    background: url("src/cadastro_produto.jpg") no-repeat center center fixed;
+    background: url("src/fundo_produto.jpg") no-repeat center center fixed;
     background-size: cover;
     color: var(--text-color);
     min-height: 100vh;
