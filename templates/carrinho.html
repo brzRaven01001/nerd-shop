@@ -1,69 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <meta charset='UTF-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Carrinho</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Carrinho de Compras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='carrinho.css') }}">
 </head>
 <body>
-  <h1>🛒 Seu Carrinho</h1>
+    <h1>Seu Carrinho</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Produto</th>
-        <th>Quantidade</th>
-        <th class="preco">Preço</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody id="tabela-carrinho">
-      <!-- Linhas dos itens serão adicionadas aqui -->
-    </tbody>
-  </table>
+    {% if carrinho %}
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th class="preco">Preço Unitário</th>
+                <th class="preco">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carrinho %}
+            <tr>
+                <td>
+                    {% if item.imagem_url %}
+                        <img src="{{ item.imagem_url }}" alt="{{ item.nome }}" width="50">
+                    {% endif %}
+                    {{ item.nome }}
+                </td>
+                <td>{{ item.quantidade }}</td>
+                <td class="preco">R$ {{ "%.2f"|format(item.preco) }}</td>
+                <td class="preco">R$ {{ "%.2f"|format(item.subtotal) }}</td>
+                <td>
+                    <form action="{{ url_for('remover_item_carrinho') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="produto_id" value="{{ item.produto_id }}">
+                        <button type="submit" class="lixeira">🗑️</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-  <div class="total" id="valor-total">Total: R$ 0,00</div>
+    <div class="total">Total: <strong>R$ {{ "%.2f"|format(total) }}</strong></div>
 
-  <script>
-    // Exemplo de lista de itens (pode vir do Python via template)
-    const itens = [
-      { produto_nome: 'Camiseta', quantidade: 2, preco_unitario: 49.90 },
-      { produto_nome: 'Tênis', quantidade: 1, preco_unitario: 199.90 },
-      { produto_nome: 'Boné', quantidade: 1, preco_unitario: 59.90 }
-    ];
+    {% else %}
+        <p>Seu carrinho está vazio</p>
+    {% endif %}
 
-    const tabela = document.getElementById('tabela-carrinho');
-    const total = document.getElementById('valor-total');
-
-    function atualizarCarrinho() {
-      tabela.innerHTML = '';
-      let soma = 0;
-
-      itens.forEach((item, i) => {
-        const subtotal = item.quantidade * item.preco_unitario;
-        soma += subtotal;
-
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.produto_nome}</td>
-          <td>${item.quantidade}</td>
-          <td class="preco">R$ ${subtotal.toFixed(2)}</td>
-          <td class="lixeira" onclick="removerItem(${i})">🗑️</td>
-        `;
-        tabela.appendChild(tr);
-      });
-
-      total.textContent = 'Total: R$ ' + soma.toFixed(2);
-    }
-
-    function removerItem(index) {
-      itens.splice(index, 1);
-      atualizarCarrinho();
-    }
-
-    atualizarCarrinho();
-  </script>
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('index') }}">⬅️ Continuar comprando</a>
+    </div>
 </body>
 </html>

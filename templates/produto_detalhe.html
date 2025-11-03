@@ -47,14 +47,16 @@
         <p>Estoque: {{ produto[4] }}</p>
 
         <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
-            <input type="hidden" name="produto_id" value="{{ produto_id }}">
+            <input type="hidden" name="produto_id" value="{{ produto[6] }}">
             <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
         </form>
 
         <form action="{{ url_for('comprar_produto') }}" method="POST">
-            <input type="hidden" name="produto_id" value="{{ produto_id }}">
+            <input type="hidden" name="produto_id" value="{{ produto[6] }}">
             <button type="submit" class="btn-comprar">Comprar Agora</button>
         </form>
+
+       
     </div>
 </div>
 

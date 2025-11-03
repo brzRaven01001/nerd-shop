@@ -42,7 +42,7 @@ def getProdutos():
             port="5432"             
         )
         cur = conn.cursor()
-        cur.execute("SELECT nome, descricao, preco, categoria, estoque, imagem_url FROM produtos;")
+        cur.execute("SELECT nome, descricao, preco, categoria, estoque, imagem_url, id FROM produtos;")
     
         resultados = cur.fetchall()
         cur.close()

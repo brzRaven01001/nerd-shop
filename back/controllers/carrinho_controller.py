@@ -7,10 +7,9 @@ class CarrinhoController:
         try:
             produtos = getProdutos()
             
-            # Encontrar produto
             produto_encontrado = None
             for produto in produtos:
-                if produto[0] == produto_id:  # Ajuste
+                if int(produto[6]) == produto_id:
                     produto_encontrado = produto
                     break
             

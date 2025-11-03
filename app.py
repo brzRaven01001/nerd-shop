@@ -29,90 +29,50 @@ def adicionar_carrinho():
     try:
         produto_id = int(request.form['produto_id'])
         quantidade = int(request.form.get('quantidade', 1))
-        
+
+        # Pega todos os produtos do banco
+        produtos = getProdutos()
+        print("Produto ID recebido:", produto_id)
+        print("IDs do banco:", [p[6] for p in produtos])
+
+        # Busca o produto no banco antes de qualquer coisa
+        produto = next((p for p in produtos if int(p[6]) == produto_id), None)
+   
+        # Agora podemos chamar o controller, se necessário
         resultado_validacao = carrinho_controller.adicionar_ao_carrinho(produto_id, quantidade)
-        
         if not resultado_validacao["success"]:
             flash(resultado_validacao["message"], "error")
             return redirect(request.referrer or url_for('index'))
-        
+
+        # Inicializa carrinho na sessão se não existir
         if 'carrinho' not in session:
             session['carrinho'] = []
-        
-        produto_existente = None
-        for item in session['carrinho']:
-            if item['produto_id'] == produto_id:
-                produto_existente = item
-                break
-        
+
+        # Verifica se o produto já existe no carrinho
+        produto_existente = next((i for i in session['carrinho'] if i['produto_id'] == produto_id), None)
+
         if produto_existente:
             produto_existente['quantidade'] += quantidade
             produto_existente['subtotal'] = produto_existente['preco'] * produto_existente['quantidade']
         else:
-            produtos = getProdutos()
-            if produto_id < len(produtos):
-                produto = produtos[produto_id]
-                novo_item = {
-                    'produto_id': produto_id,
-                    'nome': produto[0],  # nome
-                    'preco': float(produto[2]),  # preço
-                    'quantidade': quantidade,
-                    'imagem_url': produto[5],  # imagem_url
-                    'subtotal': float(produto[2]) * quantidade
-                }
-                session['carrinho'].append(novo_item)
-        
+            novo_item = {
+                'produto_id': produto_id,
+                'nome': produto[0],
+                'preco': float(produto[2]),
+                'quantidade': quantidade,
+                'imagem_url': produto[5],
+                'subtotal': float(produto[2]) * quantidade
+            }
+            session['carrinho'].append(novo_item)
+
         session.modified = True
-        flash(f"{resultado_validacao['produto']['nome']} adicionado ao carrinho!", "success")
-        
+        flash(f"{produto[0]} adicionado ao carrinho!", "success")
+
     except Exception as e:
         flash(f"Erro ao adicionar ao carrinho: {str(e)}", "error")
-    
+
     return redirect(request.referrer or url_for('index'))
 
-@app.route("/remover_carrinho", methods=["POST"])
-def remover_carrinho():
-    try:
-        produto_id = int(request.form['produto_id'])
-        
-        if 'carrinho' in session:
-            session['carrinho'] = [item for item in session['carrinho'] if item['produto_id'] != produto_id]
-            session.modified = True
-            flash("Produto removido do carrinho!", "success")
-        
-    except Exception as e:
-        flash(f"Erro ao remover do carrinho: {str(e)}", "error")
-    
-    return redirect(url_for('ver_carrinho'))
-
-@app.route("/atualizar_carrinho", methods=["POST"])
-def atualizar_carrinho():
-    try:
-        produto_id = int(request.form['produto_id'])
-        nova_quantidade = int(request.form['quantidade'])
-        
-        if nova_quantidade <= 0:
-            return redirect(url_for('remover_carrinho'))
-        
-        resultado_validacao = carrinho_controller.adicionar_ao_carrinho(produto_id, nova_quantidade)
-        
-        if not resultado_validacao["success"]:
-            flash(resultado_validacao["message"], "error")
-            return redirect(url_for('ver_carrinho'))
-        
-        if 'carrinho' in session:
-            for item in session['carrinho']:
-                if item['produto_id'] == produto_id:
-                    item['quantidade'] = nova_quantidade
-                    item['subtotal'] = item['preco'] * nova_quantidade
-                    break
-            session.modified = True
-            flash("Quantidade atualizada!", "success")
-        
-    except Exception as e:
-        flash(f"Erro ao atualizar carrinho: {str(e)}", "error")
-    
-    return redirect(url_for('ver_carrinho'))
 
 @app.route("/carrinho")
 def ver_carrinho():
@@ -120,84 +80,19 @@ def ver_carrinho():
     total = sum(item['subtotal'] for item in carrinho)
     return render_template("carrinho.html", carrinho=carrinho, total=total)
 
-@app.route("/limpar_carrinho", methods=["POST"])
-def limpar_carrinho():
-    session.pop('carrinho', None)
-    flash("Carrinho limpo!", "success")
+
+@app.route("/remover_item_carrinho", methods=["POST"])
+def remover_item_carrinho():
+    try:
+        produto_id = int(request.form['produto_id'])
+        if 'carrinho' in session:
+            session['carrinho'] = [item for item in session['carrinho'] if item['produto_id'] != produto_id]
+            session.modified = True
+            flash("Produto removido do carrinho!", "success")
+    except Exception as e:
+        flash(f"Erro ao remover item: {str(e)}", "error")
     return redirect(url_for('ver_carrinho'))
 
-@app.route("/finalizar_compra", methods=["POST"])
-def finalizar_compra():
-    try:
-        # Verificar se usuário está logado
-        if 'usuario' not in session:
-            flash("Você precisa estar logado para finalizar a compra!", "error")
-            return redirect(url_for('login_usuario'))
-        
-        # Verificar se carrinho não está vazio
-        carrinho = session.get('carrinho', [])
-        if not carrinho:
-            flash("Seu carrinho está vazio!", "error")
-            return redirect(url_for('ver_carrinho'))
-        
-        # Preparar dados para a compra
-        usuario_id = session['usuario'][0]  # Assumindo que ID é o primeiro campo
-        itens_compra = []
-        
-        for item in carrinho:
-            itens_compra.append({
-                'produto_id': item['produto_id'],
-                'quantidade': item['quantidade'],
-                'preco_unitario': item['preco']
-            })
-        
-        # Processar compra
-        resultado_compra = venda_controller.processar_compra(usuario_id, itens_compra)
-        
-        if resultado_compra["success"]:
-            # Limpar carrinho após compra bem-sucedida
-            session.pop('carrinho', None)
-            flash(f"Compra realizada com sucesso! ID da venda: {resultado_compra['venda_id']}", "success")
-            return redirect(url_for('historico_compras'))
-        else:
-            flash(resultado_compra["message"], "error")
-            return redirect(url_for('ver_carrinho'))
-            
-    except Exception as e:
-        flash(f"Erro ao finalizar compra: {str(e)}", "error")
-        return redirect(url_for('ver_carrinho'))
-
-@app.route("/historico_compras")
-def historico_compras():
-    if 'usuario' not in session:
-        flash("Você precisa estar logado para ver o histórico!", "error")
-        return redirect(url_for('login_usuario'))
-    
-    usuario_id = session['usuario'][0]
-    resultado = venda_controller.obter_historico_compras(usuario_id)
-    
-    if resultado["success"]:
-        return render_template("historico_compras.html", vendas=resultado["vendas"])
-    else:
-        flash(resultado["message"], "error")
-        return redirect(url_for('index'))
-
-@app.route("/detalhes_venda/<int:venda_id>")
-def detalhes_venda(venda_id):
-    if 'usuario' not in session:
-        flash("Você precisa estar logado!", "error")
-        return redirect(url_for('login_usuario'))
-    
-    usuario_id = session['usuario'][0]
-    resultado = venda_controller.obter_detalhes_venda(venda_id, usuario_id)
-    
-    if resultado["success"]:
-        return render_template("detalhes_venda.html", 
-                             venda=resultado["venda"], 
-                             itens=resultado["itens"])
-    else:
-        flash(resultado["message"], "error")
-        return redirect(url_for('historico_compras'))
 
 @app.route("/comprar_agora", methods=["POST"])
 def comprar_produto():
@@ -281,11 +176,14 @@ def logout():
 
 @app.route("/produto/<int:produto_id>")
 def produto_detalhe(produto_id):
-    produtos = getProdutos() 
-    if produto_id < 0 or produto_id >= len(produtos):
-        return "Produto não encontrado", 404
-    produto = produtos[produto_id]
+    produtos = getProdutos()
+    produto = next((p for p in produtos if int(p[6]) == produto_id), None)
+    print(f"Produto ID recebido: {produto_id}") 
+    if not produto:
+        return "Produto não achado", 404
     return render_template("produto_detalhe.html", produto=produto)
+
+
 
 @app.route('/submit-product', methods=['POST'])
 def submit_product():
