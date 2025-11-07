@@ -24,3 +24,17 @@ table {
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e3e8f0;
+}
+
+th {
+  background: #f0f6ff;
+  color: #4b5a78;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
