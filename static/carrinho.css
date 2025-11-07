@@ -65,3 +65,16 @@ td img {
   transform: scale(1.2);
   opacity: 0.7;
 }
+
+.total {
+  margin: 20px auto;
+  max-width: 900px;
+  background: #3f4c64;
+  color: #fff;
+  text-align: right;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
