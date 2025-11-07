@@ -48,3 +48,7 @@ td img {
   margin-right: 10px;
   vertical-align: middle;
 }
+
+.preco {
+  text-align: right;
+}
