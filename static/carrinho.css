@@ -5,3 +5,11 @@ body {
   padding: 20px;
   color: #333;
 }
+
+h1 {
+  text-align: center;
+  color: #000000;
+  margin-bottom: 25px;
+  font-size: 2em;
+  text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
