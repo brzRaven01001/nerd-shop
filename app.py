@@ -165,6 +165,9 @@ def submit_product():
 def executar_venda():
     return executar_venda_controller()
 
+@app.route("/confirmacao")
+def confirmacao():
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

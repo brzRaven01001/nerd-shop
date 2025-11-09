@@ -93,10 +93,6 @@ def executar_venda_controller():
 
             if resultado["success"]:
                 session.pop('carrinho', None) 
-                return jsonify({
-                    "success": True,
-                    "message": "Compra realizada com sucesso!",
-                    "venda_id": resultado["venda_id"]
-                })
+                return redirect(url_for('index'))
             else:
                 return jsonify({"success": False, "message": resultado["message"]}), 400
