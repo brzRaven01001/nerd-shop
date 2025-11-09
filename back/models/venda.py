@@ -153,3 +153,34 @@ def obter_vendas_por_usuario(usuario_id):
         if 'conn' in locals():
             conn.close()
         return []
+    
+
+def executar_venda(venda_id):
+    """Finaliza a venda e confirma a baixa de estoque"""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT produto_id, quantidade FROM itens_venda WHERE venda_id = %s
+        """, (venda_id,))
+        itens = cursor.fetchall()
+
+        for produto_id, quantidade in itens:
+            cursor.execute("""
+                UPDATE produtos SET estoque = estoque - %s WHERE id = %s
+            """, (quantidade, produto_id))
+
+        cursor.execute("""
+            UPDATE vendas SET status = 'executada' WHERE id = %s
+        """, (venda_id,))
+
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print("Erro ao executar venda:", e)
+        if 'conn' in locals():
+            conn.rollback()
+            conn.close()
+        return False

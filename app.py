@@ -3,7 +3,7 @@ from back.controllers.cadastro_controller import url
 from back.controllers.cadastro_usuario import url_usuario
 from back.models.produto import insereProdutoSQL, getProdutos
 from back.models.usuario import cadastra_usuario, autentica_usuario
-from back.controllers.venda_controller import VendaController
+from back.controllers.venda_controller import VendaController, executar_venda_controller
 from back.controllers.carrinho_controller import CarrinhoController
 
 app = Flask(__name__)
@@ -94,46 +94,6 @@ def remover_item_carrinho():
     return redirect(url_for('ver_carrinho'))
 
 
-@app.route("/comprar_agora", methods=["POST"])
-def comprar_produto():
-    try:
-        produto_id = int(request.form['produto_id'])
-        quantidade = int(request.form.get('quantidade', 1))
-        
- 
-        if 'usuario' not in session:
-            flash("Você precisa estar logado para comprar!", "error")
-            return redirect(url_for('login_usuario'))
-        
-      
-        resultado_validacao = carrinho_controller.adicionar_ao_carrinho(produto_id, quantidade)
-        
-        if not resultado_validacao["success"]:
-            flash(resultado_validacao["message"], "error")
-            return redirect(request.referrer or url_for('index'))
-        
-   
-        usuario_id = session['usuario'][0]
-        itens_compra = [{
-            'produto_id': produto_id,
-            'quantidade': quantidade,
-            'preco_unitario': resultado_validacao['produto']['preco']
-        }]
-        
-   
-        resultado_compra = venda_controller.processar_compra(usuario_id, itens_compra)
-        
-        if resultado_compra["success"]:
-            flash(f"Compra realizada com sucesso! ID: {resultado_compra['venda_id']}", "success")
-            return redirect(url_for('historico_compras'))
-        else:
-            flash(resultado_compra["message"], "error")
-            return redirect(request.referrer or url_for('index'))
-            
-    except Exception as e:
-        flash(f"Erro ao processar compra: {str(e)}", "error")
-        return redirect(request.referrer or url_for('index'))
-
 @app.route("/cadastro")
 def cadastro():
     produtos = getProdutos()  
@@ -199,6 +159,12 @@ def submit_product():
         return f"Erro ao cadastrar produto: {resultado['error']}", 500
     
     return redirect(url_for('index'))
+
+
+@app.route("/executar_venda", methods=["POST"])
+def executar_venda():
+    return executar_venda_controller()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
