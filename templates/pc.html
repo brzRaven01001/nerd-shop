@@ -8,32 +8,44 @@
     </head>
     <body>
         <header class="headercima">
-           <a href="{{ url_for('index') }}" style="color: rgb(10, 255, 255); text-decoration: none; font-size: 24px; font-weight: bold;">NERDSHOP</a>
+    <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
 
-            <div class="extras">
-                <a href="{{ url_for('pc') }}" class="espcs">PC</a>
-                <a href="#" class="espcs">Periféricos</a>
-                <a href="#" class="espcs">Console</a>
-                <a href="#" class="espcs">Suporte</a>
+    <div class="extras">
+        <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+        <a href="perifericos.html" class="espcs">Periféricos</a>
+        <a href="console.html" class="espcs">Console</a>
+        <a href="suporte.html" class="espcs">Suporte</a>
+        <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+    </div>
+
+    <div class="barrapesquisa">
+        <input type="text" placeholder="BUSCAR">
+        <button class="pesquisa">OK</button>
+    </div>
+
+    <div class="acoes-header">
+        <a href="{{ url_for('ver_carrinho') }}" 
+           style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+           🛒 Carrinho
+        </a>
+
+        <div class="menu-container">
+            <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+            <div class="menudropdown" id="menudropdown">
+                <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
+                <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
             </div>
-            <div class="barrapesquisa">
-                <input type="text" placeholder="BUSCAR">
-                <button class="pesquisa">OK</button>
-            </div>
-            <div class="acoes-header">
-                <a href="{{ url_for('ver_carrinho') }}" 
-                   style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
-                   🛒 Carrinho
-                </a>
-                <div class="menu-container">
-                    <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
-                    <div class="menudropdown" id="menudropdown">
-                        <a href="{{ url_for('login_usuario') }}" class="botaomenu">login</a>
-                        <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">cadastro</a>
-                    </div>
-                </div>
-            </div>
-        </header>
+        </div>
+    </div>
+</header>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById('menudropdown');
+    menu.classList.toggle('show');
+}
+</script>
+
         
         <script>
         function toggleMenu() {
@@ -72,5 +84,9 @@
                 {% endfor %}
             </div>
         </section>
+        <footer class="footer">
+        <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
+        </footer>
+
     </body>
 </html>
