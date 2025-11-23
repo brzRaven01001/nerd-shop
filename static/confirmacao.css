@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --primary-color: #00ffff;
+    --second-color: #1eff00;
+    --black-color: #000000;
+    --gray-color: #1a1a1a;
+    --text-color: #ffffff;
+}
+
+body {
+    background: linear-gradient(to bottom right, #000000, #1a1a1a);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.headercima {
+    width: 100%;
+    background-color: var(--black-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 50px;
+}
+
+.logo a {
+    color: var(--primary-color);
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.confirmacao-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.confirmacao-card {
+    background: var(--gray-color);
+    padding: 40px;
+    border-radius: 20px;
+    border: 2px solid var(--second-color);
+    text-align: center;
+}
+
+.confirmacao-header {
+    margin-bottom: 30px;
+}
+
+.icone-sucesso {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.confirmacao-header h1 {
+    color: var(--second-color);
+    font-size: 2em;
+}
+
+.detalhes-compra {
+    background: var(--black-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.status-aprovado {
+    color: var(--second-color);
+    font-weight: bold;
+}
+
+.itens-compra {
+    background: var(--black-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.itens-compra h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.item-compra {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+
+.item-compra:last-child {
+    border-bottom: none;
+}
+
+.item-compra img {
+    border-radius: 6px;
+}
+
+.acoes-confirmacao {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-continuar, .btn-inicio {
+    padding: 12px 25px;
+    background: var(--primary-color);
+    color: var(--black-color);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-continuar:hover, .btn-inicio:hover {
+    background: var(--second-color);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .confirmacao-card {
+        padding: 25px;
+    }
+    
+    .acoes-confirmacao {
+        flex-direction: column;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        text-align: center;
+    }
+}

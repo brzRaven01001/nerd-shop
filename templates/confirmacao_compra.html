@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Confirmada - NERDSHOP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='confirmacao.css') }}">
+</head>
+<body>
+    <header class="headercima">
+        <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+    </header>
+
+    <div class="confirmacao-container">
+        <div class="confirmacao-card">
+            <div class="confirmacao-header">
+                <div class="icone-sucesso">✅</div>
+                <h1>Compra Realizada com Sucesso!</h1>
+            </div>
+            
+            <div class="detalhes-compra">
+                <div class="info-item">
+                    <strong>Número do Pedido:</strong>
+                    <span>#{{ venda.id }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Data:</strong>
+                    <span>{{ venda.data_venda.strftime('%d/%m/%Y %H:%M') }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Total:</strong>
+                    <span>R$ {{ "%.2f"|format(venda.total) }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Status:</strong>
+                    <span class="status-aprovado">{{ venda.status_pagamento or 'aprovado' }}</span>
+                </div>
+            </div>
+            
+            <div class="itens-compra">
+                <h3>Itens do Pedido</h3>
+                {% for item in itens %}
+                <div class="item-compra">
+                    <img src="{{ item.imagem_url }}" alt="{{ item.produto_nome }}" width="40">
+                    <span>{{ item.produto_nome }} x{{ item.quantidade }}</span>
+                    <span>R$ {{ "%.2f"|format(item.subtotal) }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="acoes-confirmacao">
+                <a href="{{ url_for('index') }}" class="btn-continuar">🛍️ Continuar Comprando</a>
+                <a href="{{ url_for('index') }}" class="btn-inicio">🏠 Ir para Início</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
