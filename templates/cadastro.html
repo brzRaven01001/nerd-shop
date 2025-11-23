@@ -26,12 +26,15 @@
         </div>
 
         <div class="acoes-header">
-            <img src="src/1.png" alt="carrinho" class="iconheader">
+            <a href="{{ url_for('ver_carrinho') }}" 
+           style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+           🛒 Carrinho
+            </a>
             <div class="menu-container">
-                <img src="src/2.png" alt="menu" class="iconheader" onclick="toggleMenu()">
+                <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
                 <div class="menudropdown" id="menudropdown">
-                    <a href="../login/login.html" class="botaomenu">login</a> 
-                    <a href="../cadastro/cadastro.html" class="botaomenu">cadastro</a>
+                     <a href="../cadastro/cadastro.html" class="botaomenu">Cadastro</a>
+                    <a href="../login/login.html" class="botaomenu">Login</a> 
                 </div>
             </div>
         </div>

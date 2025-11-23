@@ -25,11 +25,10 @@ a { text-decoration: none; }
    BACKGROUND GLOBAL
 ============================ */
 body {
-    background: url("src/fundo_produto.jpg") no-repeat center center fixed;
-    background-size: cover;
-    color: var(--text-color);
-    min-height: 100vh;
-    padding-bottom: 30px;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #0d0f12;
+    color: #e8eef3;
+    overflow-x: hidden;
 }
 
 /* ============================
@@ -188,7 +187,7 @@ body {
     display: inline-block;
     padding: 12px 22px;
     background: var(--second-color);
-    color: var(--black-color);
+    color: var(--text-color);
     border-radius: var(--radius);
     font-weight: bold;
     animation: fadeIn 0.4s ease;
@@ -200,111 +199,147 @@ body {
 }
 
 /* ============================
-   FORM (Cadastro / Produto / Login)
+   ESTILO EXCLUSIVO: PÁGINA DE DETALHES DO PRODUTO
+   Desenvolvido para combinar com o style.css principal
 ============================ */
-form {
-    background: rgba(18, 18, 18, 0.95);
-    padding: 28px;
-    border-radius: var(--radius);
-    max-width: 420px;
-    margin: 45px auto;
+
+/* Container principal */
+.produto-detalhe-container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 35px;
+    background: rgba(0, 0, 0, 0.85);
     border: 2px solid var(--primary-color);
-    box-shadow: var(--shadow);
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: 0.3s ease;
+    align-items: flex-start;
+    gap: 40px;
 }
 
-form:hover {
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+/* Área da Imagem */
+.produto-detalhe-imagem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
-form h1 {
+.produto-detalhe-imagem img {
+    width: 100%;
+    max-width: 380px;
+    border-radius: 20px;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    object-fit: cover;
+}
+
+/* Área de Informações */
+.produto-detalhe-info {
+    flex: 2;
+    color: var(--text-color);
+}
+
+.produto-detalhe-info h1 {
     color: var(--primary-color);
-    text-align: center;
-    margin-bottom: 12px;
-    font-size: 1.7rem;
+    margin-bottom: 15px;
+    font-size: 2rem;
     text-shadow: 0 0 8px var(--primary-color);
 }
 
-/* Inputs */
-form input,
-form select,
-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--primary-color);
-    border-radius: 14px;
-    background: #0d0d0d;
-    color: var(--text-color);
-    font-size: 15px;
-    transition: 0.3s ease;
-}
-
-form textarea {
-    resize: none;
-    min-height: 80px;
-}
-
-form input:focus,
-form select:focus,
-form textarea:focus {
-    border-color: var(--second-color);
-    box-shadow: 0 0 10px var(--second-color);
-}
-
-/* Botão */
-.submit-button input {
-    background-color: var(--primary-color);
-    color: var(--black-color);
-    font-weight: bold;
-    padding: 11px;
-    border-radius: 16px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.25s ease;
-}
-
-.submit-button input:hover {
-    background-color: var(--second-color);
-    transform: scale(1.04);
-    box-shadow: 0 0 12px var(--second-color);
+.produto-detalhe-info p {
+    font-size: 1rem;
+    margin-bottom: 10px;
 }
 
 /* ============================
-   FOOTER
+   BOTÕES
 ============================ */
-.footer {
-    padding: 20px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.85);
-    font-size: 0.95rem;
-    color: #bbb;
-    margin-top: 40px;
-    border-top: 2px solid var(--primary-color);
+
+.btn-carrinho,
+.btn-comprar {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: 0.25s;
+}
+
+/* Botão Adicionar ao Carrinho */
+.btn-carrinho {
+    background: var(--text-color);
+    color: var(--black-color);
+}
+
+.btn-carrinho:hover {
+    background: var(--primary-color);
+    box-shadow: 0 0 12px var(--second-color);
+    transform: scale(1.03);
+}
+
+/* Botão Comprar Agora */
+.btn-comprar {
+    background: var(--primary-color);
+    color: var(--black-color);
+}
+
+.btn-comprar:hover {
+    background: var(--primary-color);
+    box-shadow: 0 0 12px var(--primary-color);
+    transform: scale(1.03);
 }
 
 /* ============================
    RESPONSIVIDADE
 ============================ */
-@media (max-width: 768px) {
-    .headercima {
-        padding: 12px 25px;
+
+@media (max-width: 900px) {
+    .produto-detalhe-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
     }
 
-    form {
-        max-width: 90%;
-        padding: 20px;
+    .produto-detalhe-imagem img {
+        max-width: 320px;
+    }
+
+    .produto-detalhe-info h1 {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .produto-detalhe-container {
+        padding: 18px;
         border-radius: 18px;
     }
 
-    .logo a {
-        font-size: 22px;
+    .produto-detalhe-imagem img {
+        max-width: 260px;
     }
 
-    .extras a {
-        margin-left: 14px;
+    .btn-carrinho,
+    .btn-comprar {
+        font-size: 0.9rem;
+        padding: 10px;
     }
 }
+
+
+/* ===========================
+        FOOTER
+=========================== */
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #0b0e11;
+    margin-top: 40px;
+    color: #848f99;
+    border-top: 1px solid #00eaff22;
+}
+
