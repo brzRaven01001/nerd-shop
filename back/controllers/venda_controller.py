@@ -1,7 +1,7 @@
 from back.models.venda import criar_venda, obter_venda_por_id, obter_vendas_por_usuario, executar_venda
+from back.models.pagamento import obter_formas_pagamento, atualizar_forma_pagamento, simular_processamento_pagamento
 from back.models.produto import getProdutos
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
-
+from flask import session, request, redirect, url_for, flash, jsonify, render_template
 
 class VendaController:
         
@@ -27,7 +27,6 @@ class VendaController:
             if not venda_completa:
                 return {"success": False, "message": "Venda não encontrada"}
             
-            # Verificar se a venda pertence ao usuário
             if venda_completa['venda']['usuario_id'] != usuario_id:
                 return {"success": False, "message": "Acesso não autorizado"}
             
@@ -40,7 +39,7 @@ class VendaController:
         except Exception as e:
             return {"success": False, "message": f"Erro ao obter detalhes da venda: {str(e)}"}
         
-    def processar_compra(self, usuario_id, itens_compra):
+    def processar_compra(self, usuario_id, itens_compra, forma_pagamento=None):
         """Processa a compra com os itens do carrinho"""
         try:
             if not usuario_id:
@@ -53,46 +52,40 @@ class VendaController:
             for item in itens_compra:
                 total += item['quantidade'] * item['preco_unitario']
             
-            # Cria a venda no banco
             venda_id = criar_venda(usuario_id, total, itens_compra)
             
             if venda_id:
+                if forma_pagamento:
+                    atualizar_forma_pagamento(venda_id, forma_pagamento)
+                
                 return {"success": True, "venda_id": venda_id}
             else:
                 return {"success": False, "message": "Erro ao criar venda no banco"}
         
         except Exception as e:
             return {"success": False, "message": f"Erro ao processar compra: {str(e)}"}
-        
-            
+
 def executar_venda_controller():
-        """Finaliza a venda usando os itens do carrinho"""
-        if request.method == "POST":
-        
-            carrinho = session.get('carrinho', [])
-            if not carrinho:
-                return jsonify({"success": False, "message": "Carrinho vazio."}), 400
+    """Finaliza a venda usando os itens do carrinho - ATUALIZADA"""
+    if request.method == "POST":
+        carrinho = session.get('carrinho', [])
+        if not carrinho:
+            return jsonify({"success": False, "message": "Carrinho vazio."}), 400
 
-        
-            usuario = session.get('usuario')
-            if not usuario:
-                return jsonify({"success": False, "message": "Usuário não logado."}), 401
+        usuario = session.get('usuario')
+        if not usuario:
+            return jsonify({"success": False, "message": "Usuário não logado."}), 401
 
-            usuario_id = usuario['id'] 
+        usuario_id = usuario['id']
 
-            itens_compra = []
-            for item in carrinho:
-                itens_compra.append({
-                    'produto_id': item['produto_id'],
-                    'quantidade': item['quantidade'],
-                    'preco_unitario': item['preco']
-                })
+        itens_compra = []
+        for item in carrinho:
+            itens_compra.append({
+                'produto_id': item['produto_id'],
+                'quantidade': item['quantidade'],
+                'preco_unitario': item['preco']
+            })
 
-            venda_controller = VendaController()
-            resultado = venda_controller.processar_compra(usuario_id, itens_compra)
-
-            if resultado["success"]:
-                session.pop('carrinho', None) 
-                return redirect(url_for('index'))
-            else:
-                return jsonify({"success": False, "message": resultado["message"]}), 400
+        # Redireciona para a tela de pagamento em vez de finalizar direto
+        session['itens_compra'] = itens_compra
+        return redirect(url_for('tela_pagamento'))

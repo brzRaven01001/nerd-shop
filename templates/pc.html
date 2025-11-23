@@ -2,75 +2,75 @@
 <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>NERDSHOP</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='pc.css') }}">
-
     </head>
     <body>
         <header class="headercima">
-           <a href="{{ url_for('index') }}">NERDSHOP</a>
-
+           <a href="{{ url_for('index') }}" style="color: rgb(10, 255, 255); text-decoration: none; font-size: 24px; font-weight: bold;">NERDSHOP</a>
 
             <div class="extras">
-                <a href="" class="especs">PC</a>
-                <a href="" class="espcs">Periféricos</a>
-                <a href="" class="especs">Console</a>
-                <a href="" class="espcs">Suporte</a>
+                <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+                <a href="#" class="espcs">Periféricos</a>
+                <a href="#" class="espcs">Console</a>
+                <a href="#" class="espcs">Suporte</a>
             </div>
             <div class="barrapesquisa">
                 <input type="text" placeholder="BUSCAR">
                 <button class="pesquisa">OK</button>
             </div>
             <div class="acoes-header">
-                <img src="../src/1.png" alt="carrinho" class="iconheader">
+                <a href="{{ url_for('ver_carrinho') }}" 
+                   style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+                   🛒 Carrinho
+                </a>
                 <div class="menu-container">
-                    <img src="../src/2.png" alt="menu" class="iconheader" onclick="toggleMenu()">
+                    <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
                     <div class="menudropdown" id="menudropdown">
-                        <a href="login.html" class="botaomenu">login</a>
-                        <a href="cadastro.html" class="botaomenu">cadastro</a>
+                        <a href="{{ url_for('login_usuario') }}" class="botaomenu">login</a>
+                        <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">cadastro</a>
                     </div>
                 </div>
             </div>
         </header>
-        <script> <!--dropdown-->
+        
+        <script>
         function toggleMenu() {
             const menu = document.getElementById('menudropdown');
             menu.classList.toggle('show');
         }
         </script>
-    <body>
 
-<section>
-<div class="produtos-container">
-        {% for produto in produtos %}
-        <div class="produto-card">
-            {% if produto[5] %}
-                <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
-            {% else %}
-                <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
-            {% endif %}
-            <h3>{{ produto[0] }}</h3>
-            <p>{{ produto[1] }}</p>
-            <p><strong>R$ {{ produto[2] }}</strong></p>
-            <p>Categoria: {{ produto[3] }}</p>
-            <p>Estoque: {{ produto[4] }}</p>
+        <section>
+            <div class="produtos-container">
+                {% for produto in produtos %}
+                <div class="produto-card">
+                    {% if produto[5] %}
+                        <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+                    {% endif %}
+                    <h3>{{ produto[0] }}</h3>
+                    <p>{{ produto[1] }}</p>
+                    <p><strong>R$ {{ produto[2] }}</strong></p>
+                    <p>Categoria: {{ produto[3] }}</p>
+                    <p>Estoque: {{ produto[4] }}</p>
 
-          
-            <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
-                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
-                <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
-            </form>
-            <form action="{{ url_for('comprar_agora') }}" method="POST">
-                <input type="hidden" name="produto_id" value="{{ loop.index0 }}">
-                <button type="submit" class="btn-comprar">Comprar Agora</button>
-            </form>
-        </div>
-        {% endfor %}
-    </div>
-
-</section>
-</body>
+                    <!-- Formulário para adicionar ao carrinho -->
+                    <form action="{{ url_for('adicionar_carrinho') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+                        <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
+                    </form>
+                    
+                    <!-- Formulário para comprar agora -->
+                    <form action="{{ url_for('comprar_agora') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+                        <button type="submit" class="btn-comprar">Comprar Agora</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </body>
 </html>
-
-

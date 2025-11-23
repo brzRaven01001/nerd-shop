@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento - NERDSHOP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pagamento.css') }}">
+</head>
+<body>
+    <header class="headercima">
+        <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+    </header>
+
+    <div class="pagamento-container">
+        <h1>🎯 Finalizar Compra</h1>
+        
+        <div class="resumo-pedido">
+            <h2>Resumo do Pedido</h2>
+            <div class="itens-resumo">
+                {% for item in carrinho %}
+                <div class="item-resumo">
+                    <img src="{{ item.imagem_url }}" alt="{{ item.nome }}" width="50">
+                    <span>{{ item.nome }} x{{ item.quantidade }}</span>
+                    <span>R$ {{ "%.2f"|format(item.subtotal) }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="total-resumo">
+                <strong>Total: R$ {{ "%.2f"|format(total) }}</strong>
+            </div>
+        </div>
+
+        <div class="formas-pagamento">
+            <h2>💳 Escolha a forma de pagamento</h2>
+            
+            <form id="formPagamento">
+                {% for forma in formas_pagamento %}
+                <div class="opcao-pagamento">
+                    <input type="radio" id="{{ forma.id }}" name="forma_pagamento" value="{{ forma.id }}" required>
+                    <label for="{{ forma.id }}">
+                        <span class="icone">{{ forma.icone }}</span>
+                        <span class="nome">{{ forma.nome }}</span>
+                    </label>
+                </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn-pagar" id="btnPagar">
+                    🚀 Finalizar Pagamento
+                </button>
+            </form>
+        </div>
+
+        <div class="voltar-carrinho">
+            <a href="{{ url_for('ver_carrinho') }}">← Voltar ao Carrinho</a>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Processando seu pagamento...</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formPagamento').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const btnPagar = document.getElementById('btnPagar');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            btnPagar.disabled = true;
+            btnPagar.textContent = 'Processando...';
+            loadingOverlay.style.display = 'flex';
+            
+            try {
+                const response = await fetch("{{ url_for('processar_pagamento') }}", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = data.redirect;
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                alert("Erro ao processar pagamento: " + error);
+            } finally {
+                btnPagar.disabled = false;
+                btnPagar.textContent = '🚀 Finalizar Pagamento';
+                loadingOverlay.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
