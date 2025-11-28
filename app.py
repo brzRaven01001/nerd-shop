@@ -23,8 +23,35 @@ def index():
 
 @app.route('/pc')
 def pc():
-    produtos = getProdutos()  
-    return render_template('pc.html', produtos=produtos)
+    nome = request.args.get("nome", "")
+    categoria = request.args.get("categoria", "")
+    preco_min = request.args.get("preco_min", "")
+    preco_max = request.args.get("preco_max", "")
+
+    produtos = getProdutos()
+
+    if nome:
+        produtos = [p for p in produtos if nome.lower() in p[0].lower()]
+
+    if categoria:
+        produtos = [p for p in produtos if categoria.lower() in p[3].lower()]
+
+    if preco_min:
+        try:
+            preco_min = float(preco_min)
+            produtos = [p for p in produtos if float(p[2]) >= preco_min]
+        except:
+            pass
+
+    if preco_max:
+        try:
+            preco_max = float(preco_max)
+            produtos = [p for p in produtos if float(p[2]) <= preco_max]
+        except:
+            pass
+
+    return render_template("pc.html", produtos=produtos)
+
 
 @app.route("/adicionar_carrinho", methods=["POST"])
 def adicionar_carrinho():
