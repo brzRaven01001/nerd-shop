@@ -8,45 +8,37 @@
     </head>
     <body>
         <header class="headercima">
-    <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+            <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
 
-    <div class="extras">
-        <a href="{{ url_for('pc') }}" class="espcs">PC</a>
-        <a href="perifericos.html" class="espcs">Periféricos</a>
-        <a href="console.html" class="espcs">Console</a>
-        <a href="suporte.html" class="espcs">Suporte</a>
-        <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
-    </div>
-
-    <div class="barrapesquisa">
-        <input type="text" placeholder="BUSCAR">
-        <button class="pesquisa">OK</button>
-    </div>
-
-    <div class="acoes-header">
-        <a href="{{ url_for('ver_carrinho') }}" 
-           style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
-           🛒 Carrinho
-        </a>
-
-        <div class="menu-container">
-            <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
-            <div class="menudropdown" id="menudropdown">
-                <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
-                <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
+            <div class="extras">
+                <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+                <a href="perifericos.html" class="espcs">Periféricos</a>
+                <a href="console.html" class="espcs">Console</a>
+                <a href="suporte.html" class="espcs">Suporte</a>
+                <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
             </div>
-        </div>
-    </div>
-</header>
 
-<script>
-function toggleMenu() {
-    const menu = document.getElementById('menudropdown');
-    menu.classList.toggle('show');
-}
-</script>
+            <div class="barrapesquisa">
+                <input type="text" placeholder="BUSCAR">
+                <button class="pesquisa">OK</button>
+            </div>
 
-        
+            <div class="acoes-header">
+                <a href="{{ url_for('ver_carrinho') }}" 
+                style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+                    🛒 Carrinho
+                </a>
+
+                <div class="menu-container">
+                    <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+                    <div class="menudropdown" id="menudropdown">
+                        <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
+                        <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <script>
         function toggleMenu() {
             const menu = document.getElementById('menudropdown');
@@ -55,6 +47,24 @@ function toggleMenu() {
         </script>
 
         <section>
+
+            <!-- ⭐ FILTRO DE PRODUTOS ⭐ -->
+            <form method="GET" action="/pc" class="filtro-container">
+                <input type="text" name="nome" placeholder="Buscar por nome"
+                    value="{{ request.args.get('nome', '') }}">
+
+                <input type="text" name="categoria" placeholder="Categoria"
+                    value="{{ request.args.get('categoria', '') }}">
+
+                <input type="number" step="0.01" name="preco_min" placeholder="Preço mínimo"
+                    value="{{ request.args.get('preco_min', '') }}">
+
+                <input type="number" step="0.01" name="preco_max" placeholder="Preço máximo"
+                    value="{{ request.args.get('preco_max', '') }}">
+
+                <button type="submit" class="btn-filtrar">Filtrar</button>
+            </form>
+
             <div class="produtos-container">
                 {% for produto in produtos %}
                 <div class="produto-card">
@@ -69,13 +79,11 @@ function toggleMenu() {
                     <p>Categoria: {{ produto[3] }}</p>
                     <p>Estoque: {{ produto[4] }}</p>
 
-                    <!-- Formulário para adicionar ao carrinho -->
                     <form action="{{ url_for('adicionar_carrinho') }}" method="POST" style="display: inline;">
                         <input type="hidden" name="produto_id" value="{{ produto[6] }}">
                         <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
                     </form>
                     
-                    <!-- Formulário para comprar agora -->
                     <form action="{{ url_for('comprar_agora') }}" method="POST" style="display: inline;">
                         <input type="hidden" name="produto_id" value="{{ produto[6] }}">
                         <button type="submit" class="btn-comprar">Comprar Agora</button>
@@ -84,8 +92,9 @@ function toggleMenu() {
                 {% endfor %}
             </div>
         </section>
+
         <footer class="footer">
-        <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
+            <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
         </footer>
 
     </body>
