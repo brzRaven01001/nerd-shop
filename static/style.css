@@ -1,119 +1,148 @@
+/* ===========================
+        RESET E CONFIG GLOBAL
+=========================== */
 
-body {
+* {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #ffffff;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html, body {
-    width: 100%;
-    height: 100%;
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #0d0f12;
+    color: #e8eef3;
     overflow-x: hidden;
 }
 
+a { text-decoration: none; }
+
+
+/* ===========================
+        HEADER
+=========================== */
 
 .headercima {
     width: 100%;
-    background-color: #000000;
+    background: #0b0e11;
+    padding: 16px 40px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 12px 50px 12px 30px;
-    position: relative;
+    justify-content: space-between;
+    gap: 25px;
+
+    position: sticky;
+    top: 0;
     z-index: 1000;
+
+    border-bottom: 1px solid #00eaff33;
+    box-shadow: 0 4px 15px #00000088;
 }
 
-.logo {
-    color: rgb(1, 26, 249);
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-                 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
+/* LOGO */
 .logo a {
-    color: rgb(10, 255, 255);
-    text-decoration: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: #00eaff;
+    transition: 0.3s;
 }
 
 .logo a:hover {
-    color: #0cac9e;
-    transition: 0.3s;
+    color: #14b8e5;
 }
 
+/* MENU */
 .extras {
     display: flex;
-    gap: 140px;
-    font-weight: 500;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-                 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    gap: 28px;
 }
 
 .extras a {
-    color: rgb(10, 255, 255);
-    text-decoration: none;
-}
-
-.extras a:hover {
-    color: #0cac9e;
+    font-size: 16px;
+    color: #d6f6ff;
+    font-weight: 500;
     transition: 0.3s;
 }
 
+.extras a:hover {
+    color: #00eaff;
+}
+
+
+/* ===========================
+        BARRA DE PESQUISA
+=========================== */
+
 .barrapesquisa {
     display: flex;
-    flex: 1;
-    max-width: 30px;
-    margin: 0 20px;
+    align-items: center;
+    background: #13181d;
+    border: 1px solid #00eaff55;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .barrapesquisa input {
-    flex: 1;
-    padding: 8px 10px;
+    padding: 10px 14px;
+    background: transparent;
     border: none;
-    border-radius: 5px 0 0 5px;
+    color: white;
+    width: 180px;
     outline: none;
+    font-size: 15px;
 }
 
 .pesquisa {
-    padding: 8px 12px;
-    background: rgb(6, 204, 204);
-    color: rgb(255, 255, 255);
-    font-weight: bold;
+    padding: 10px 14px;
+    background: #00eaff;
     border: none;
-    border-radius: 0 5px 5px 0;
+    font-weight: bold;
     cursor: pointer;
+    color: black;
 }
+
+.pesquisa:hover {
+    background: #0ad3c6;
+}
+
+
+/* ===========================
+        ÍCONES + MENU LOGIN
+=========================== */
 
 .acoes-header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-right: 50px;
+    gap: 20px;
 }
 
 .iconheader {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
+    width: 51px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
+.iconheader:hover {
+    transform: scale(1.12);
+}
+
+/* Dropdown */
 .menu-container {
     position: relative;
 }
 
 .menudropdown {
     display: none;
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: #282224;
-    border-radius: 8px;
-    padding: 10px;
     flex-direction: column;
+    background: #0f1318;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    border: 1px solid #00eaff33;
+    padding: 10px;
+    border-radius: 8px;
     gap: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    z-index: 999;
+    box-shadow: 0 0 20px #000;
 }
 
 .menudropdown.show {
@@ -121,167 +150,122 @@ html, body {
 }
 
 .botaomenu {
-    padding: 8px 12px;
-    background-color: #1eff00;
-    border: none;
-    color: rgb(0, 0, 0);
+    background: #00eaff;
+    color: black;
+    padding: 8px 10px;
     border-radius: 6px;
-    cursor: pointer;
-}
-
-/* ====== FLASH MESSAGES ====== */
-.flash-messages {
-    width: 100%;
-    text-align: center;
-    margin: 10px auto;
-}
-
-.flash {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #00c851;
-    color: #fff;
-    border-radius: 5px;
     font-weight: bold;
-    animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+.botaomenu:hover {
+    background: #0ad3c6;
 }
 
+
+/* ===========================
+        BANNER
+=========================== */
 
 .foto img {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 360px;
     object-fit: cover;
     display: block;
+    filter: brightness(0.85);
+    animation: bannerZoom 12s ease-in-out infinite alternate;
 }
 
-@keyframes kenburns-top {
-    0% {
-        transform: scale(1) translateY(0);
-        transform-origin: 10% 9%;
-    }
-    100% {
-        transform: scale(1.04) translateY(-10px);
-        transform-origin: top;
-    }
+@keyframes bannerZoom {
+    0%   { transform: scale(1); }
+    100% { transform: scale(1.05); }
 }
 
-.kenburns {
-    animation: kenburns-top 7s ease-in-out infinite alternate;
+
+/* ===========================
+        FLASH MESSAGES
+=========================== */
+
+.flash-messages {
+    margin: 15px auto;
+    width: 100%;
+    text-align: center;
 }
 
+.flash-messages p {
+    background: #00d27f;
+    color: #002e18;
+    padding: 10px 20px;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+
+/* ===========================
+        PRODUTOS
+=========================== */
+
+.produtos-title {
+    text-align: center;
+    color: #00eaff;
+    margin-top: 40px;
+    font-size: 28px;
+}
 
 .produtos-container {
+    margin: 35px auto;
+    max-width: 1300px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
-    margin: 40px auto;
-    max-width: 1200px;
-    padding: 0 20px;
+    gap: 28px;
 }
 
 .produto-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 15px;
-    width: 220px;
-    text-align: center;
-    background: #f9f9f9;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    width: 240px;
+    background: #11161d;
+    border-radius: 12px;
+
+    border: 1px solid #00eaff22;
+    box-shadow: 0 0 12px #0006;
+
+    transition: 0.30s ease;
+    overflow: hidden;
 }
 
 .produto-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    box-shadow: 0 0 20px #00eaff55;
 }
 
 .produto-card img {
     width: 100%;
-    height: 180px;
+    height: 170px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 10px;
 }
 
 .produto-card h3 {
-    margin: 8px 0;
-    font-size: 18px;
-    color: #333;
+    margin: 10px 0 4px;
+    color: #00eaff;
+    text-align: center;
 }
 
 .produto-card p {
-    margin: 4px 0;
+    text-align: center;
     font-size: 14px;
-    color: #555;
-}
-
-.btn-carrinho,
-.btn-comprar {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-    transition: background 0.3s;
-}
-
-.btn-carrinho {
-    background: #007bff;
-    color: #fff;
-}
-
-.img.iconheader {
-    background-color: rgb(63, 63, 63);
-}
-
-.btn-carrinho:hover {
-    background: #0056b3;
-}
-
-.btn-comprar {
-    background: #28a745;
-}
-
-.btn-comprar:hover {
-    background: #1e7e34;
+    color: #c8d4de;
 }
 
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    max-width: 900px;
-    width: 90%;
-    margin: 50px auto;
-}
-
-.grid img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.grid img:hover {
-    transform: scale(1.05);
-}
-
+/* ===========================
+        FOOTER
+=========================== */
 
 .footer {
-    padding: 20px;
     text-align: center;
-    background: #000000;
-    font-size: 0.9rem;
-    color: #888;
+    padding: 20px;
+    background: #0b0e11;
+    margin-top: 40px;
+    color: #848f99;
+    border-top: 1px solid #00eaff22;
 }

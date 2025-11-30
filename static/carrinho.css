@@ -96,6 +96,24 @@ a:hover {
   transform: scale(1.05);
 }
 
+.btn-comprar{
+  display: inline-block;
+  text-decoration: none;
+  background: #3f4c64;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin: 20px auto;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-comprar:hover {
+  background: #3c63d8;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   table, thead, tbody, th, td, tr {
     display: block;

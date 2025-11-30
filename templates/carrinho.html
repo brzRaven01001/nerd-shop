@@ -48,22 +48,17 @@
 
     {% else %}
         <p>Seu carrinho está vazio</p>
-
     {% endif %}
 
     <div style="margin-top: 20px;">
         <a href="{{ url_for('index') }}"> Continuar comprando</a>
         
-        <form action="{{ url_for('executar_venda') }}" method="POST" style="display:inline;">
-            {% for item in carrinho %}
-                <input type="hidden" name="produto_id" value="{{ item.produto_id }}">
-                <input type="hidden" name="quantidade" value="{{ item.quantidade }}">
-            {% endfor %}
-            <button type="submit" class="btn-comprar">Finalizar Compra</button>
-        </form>
-
-
-
+        {% if carrinho %}
+            <!-- BOTÃO ATUALIZADO PARA A NOVA TELA DE PAGAMENTO -->
+            <a href="{{ url_for('tela_pagamento') }}" class="btn-comprar">
+                🚀 Finalizar Compra
+            </a>
+        {% endif %}
     </div>
 </body>
 </html>

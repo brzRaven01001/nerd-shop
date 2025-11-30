@@ -3,8 +3,10 @@ from back.controllers.cadastro_controller import url
 from back.controllers.cadastro_usuario import url_usuario
 from back.models.produto import insereProdutoSQL, getProdutos, buscarProdutosSQL
 from back.models.usuario import cadastra_usuario, autentica_usuario
+from back.models.venda import obter_venda_por_id
 from back.controllers.venda_controller import VendaController, executar_venda_controller
 from back.controllers.carrinho_controller import CarrinhoController
+from back.models.pagamento import obter_formas_pagamento, atualizar_forma_pagamento, simular_processamento_pagamento
 
 app = Flask(__name__)
 app.secret_key = 'postgres123'
@@ -21,8 +23,35 @@ def index():
 
 @app.route('/pc')
 def pc():
-    produtos = getProdutos()  
-    return render_template('pc.html', produtos=produtos)
+    nome = request.args.get("nome", "")
+    categoria = request.args.get("categoria", "")
+    preco_min = request.args.get("preco_min", "")
+    preco_max = request.args.get("preco_max", "")
+
+    produtos = getProdutos()
+
+    if nome:
+        produtos = [p for p in produtos if nome.lower() in p[0].lower()]
+
+    if categoria:
+        produtos = [p for p in produtos if categoria.lower() in p[3].lower()]
+
+    if preco_min:
+        try:
+            preco_min = float(preco_min)
+            produtos = [p for p in produtos if float(p[2]) >= preco_min]
+        except:
+            pass
+
+    if preco_max:
+        try:
+            preco_max = float(preco_max)
+            produtos = [p for p in produtos if float(p[2]) <= preco_max]
+        except:
+            pass
+
+    return render_template("pc.html", produtos=produtos)
+
 
 @app.route("/adicionar_carrinho", methods=["POST"])
 def adicionar_carrinho():
@@ -73,13 +102,11 @@ def adicionar_carrinho():
 
     return redirect(request.referrer or url_for('index'))
 
-
 @app.route("/carrinho")
 def ver_carrinho():
     carrinho = session.get('carrinho', [])
     total = sum(item['subtotal'] for item in carrinho)
     return render_template("carrinho.html", carrinho=carrinho, total=total)
-
 
 @app.route("/remover_item_carrinho", methods=["POST"])
 def remover_item_carrinho():
@@ -92,7 +119,6 @@ def remover_item_carrinho():
     except Exception as e:
         flash(f"Erro ao remover item: {str(e)}", "error")
     return redirect(url_for('ver_carrinho'))
-
 
 @app.route("/cadastro")
 def cadastro():
@@ -131,6 +157,7 @@ def login_usuario():
 def logout():
     session.pop('usuario', None)
     session.pop('carrinho', None)
+    session.pop('carrinho_temporario', None)
     flash("Logout realizado com sucesso!", "success")
     return redirect(url_for('index'))
 
@@ -142,8 +169,6 @@ def produto_detalhe(produto_id):
     if not produto:
         return "Produto não achado", 404
     return render_template("produto_detalhe.html", produto=produto)
-
-
 
 @app.route('/submit-product', methods=['POST'])
 def submit_product():
@@ -160,11 +185,157 @@ def submit_product():
     
     return redirect(url_for('index'))
 
-
 @app.route("/executar_venda", methods=["POST"])
 def executar_venda():
     return executar_venda_controller()
 
+@app.route("/confirmacao")
+def confirmacao():
+    return render_template("index.html")
+
+# ====== NOVAS ROTAS DE PAGAMENTO ======
+
+@app.route("/pagamento")
+def tela_pagamento():
+    """Tela de escolha de forma de pagamento"""
+    if 'usuario' not in session:
+        flash("Você precisa estar logado para finalizar a compra!", "error")
+        return redirect(url_for('login_usuario'))
+    
+    # Verifica se tem carrinho normal OU carrinho temporário (compra direta)
+    carrinho_normal = session.get('carrinho', [])
+    carrinho_temporario = session.get('carrinho_temporario', [])
+    
+    if not carrinho_normal and not carrinho_temporario:
+        flash("Seu carrinho está vazio!", "error")
+        return redirect(url_for('ver_carrinho'))
+    
+    # Usa o carrinho temporário se existir, senão usa o normal
+    carrinho = carrinho_temporario if carrinho_temporario else carrinho_normal
+    
+    formas_pagamento = obter_formas_pagamento()
+    total = sum(item['subtotal'] for item in carrinho)
+    
+    return render_template("pagamento.html", 
+                         formas_pagamento=formas_pagamento,
+                         total=total,
+                         carrinho=carrinho)
+
+@app.route("/processar_pagamento", methods=["POST"])
+def processar_pagamento():
+    """Processa o pagamento escolhido"""
+    if 'usuario' not in session:
+        return jsonify({"success": False, "message": "Usuário não logado"}), 401
+    
+    # Verifica se tem carrinho normal OU carrinho temporário
+    carrinho_normal = session.get('carrinho', [])
+    carrinho_temporario = session.get('carrinho_temporario', [])
+    
+    if not carrinho_normal and not carrinho_temporario:
+        return jsonify({"success": False, "message": "Carrinho vazio"}), 400
+    
+    # Usa o carrinho temporário se existir, senão usa o normal
+    carrinho = carrinho_temporario if carrinho_temporario else carrinho_normal
+    
+    forma_pagamento = request.form.get('forma_pagamento')
+    if not forma_pagamento:
+        return jsonify({"success": False, "message": "Forma de pagamento não selecionada"}), 400
+    
+    usuario_id = session['usuario']['id']
+    itens_compra = []
+    
+    for item in carrinho:
+        itens_compra.append({
+            'produto_id': item['produto_id'],
+            'quantidade': item['quantidade'],
+            'preco_unitario': item['preco']
+        })
+    
+    # Processar a venda
+    venda_controller = VendaController()
+    resultado = venda_controller.processar_compra(usuario_id, itens_compra, forma_pagamento)
+    
+    if resultado["success"]:
+        # Simular processamento do pagamento
+        resultado_pagamento = simular_processamento_pagamento(resultado["venda_id"], forma_pagamento)
+        
+        if resultado_pagamento["success"]:
+            # Limpar carrinhos e redirecionar para confirmação
+            session.pop('carrinho', None)
+            session.pop('carrinho_temporario', None)
+            session.pop('itens_compra', None)
+            session['ultima_venda'] = resultado["venda_id"]
+            
+            return jsonify({
+                "success": True, 
+                "message": resultado_pagamento["message"],
+                "redirect": url_for('confirmacao_compra')
+            })
+        else:
+            return jsonify({"success": False, "message": resultado_pagamento["message"]}), 400
+    else:
+        return jsonify({"success": False, "message": resultado["message"]}), 400
+
+@app.route("/confirmacao_compra")
+def confirmacao_compra():
+    """Tela de confirmação da compra"""
+    if 'ultima_venda' not in session:
+        flash("Nenhuma compra recente encontrada!", "error")
+        return redirect(url_for('index'))
+    
+    venda_id = session['ultima_venda']
+    venda_completa = obter_venda_por_id(venda_id)
+    
+    if not venda_completa:
+        flash("Venda não encontrada!", "error")
+        return redirect(url_for('index'))
+    
+    return render_template("confirmacao_compra.html", 
+                         venda=venda_completa['venda'],
+                         itens=venda_completa['itens'])
+
+@app.route("/comprar_agora", methods=["POST"])
+def comprar_agora():
+    """Compra direta de um produto (sem passar pelo carrinho)"""
+    try:
+        produto_id = int(request.form['produto_id'])
+        quantidade = int(request.form.get('quantidade', 1))
+
+        # Busca o produto
+        produtos = getProdutos()
+        produto = next((p for p in produtos if int(p[6]) == produto_id), None)
+        
+        if not produto:
+            flash("Produto não encontrado!", "error")
+            return redirect(request.referrer or url_for('index'))
+
+        # Valida estoque
+        if produto[4] < quantidade:
+            flash(f"Estoque insuficiente! Disponível: {produto[4]}", "error")
+            return redirect(request.referrer or url_for('index'))
+
+        # Se usuário não está logado, redireciona para login
+        if 'usuario' not in session:
+            flash("Você precisa estar logado para comprar!", "error")
+            return redirect(url_for('login_usuario'))
+
+        # Cria um carrinho temporário com apenas este produto
+        item_compra = {
+            'produto_id': produto_id,
+            'nome': produto[0],
+            'preco': float(produto[2]),
+            'quantidade': quantidade,
+            'imagem_url': produto[5],
+            'subtotal': float(produto[2]) * quantidade
+        }
+        
+        # Redireciona direto para a tela de pagamento
+        session['carrinho_temporario'] = [item_compra]
+        return redirect(url_for('tela_pagamento'))
+
+    except Exception as e:
+        flash(f"Erro ao processar compra: {str(e)}", "error")
+        return redirect(request.referrer or url_for('index'))
 @app.route("/buscar")
 def buscar():
     termo = request.args.get("query", "")

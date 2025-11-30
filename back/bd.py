@@ -101,7 +101,9 @@ def criar_tabela_vendas():
                 usuario_id INTEGER REFERENCES usuarios(id),
                 total NUMERIC(10, 2) NOT NULL,
                 data_venda TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                status VARCHAR(50) DEFAULT 'concluida'
+                status VARCHAR(50) DEFAULT 'concluida',
+                forma_pagamento VARCHAR(50),
+                status_pagamento VARCHAR(50) DEFAULT 'pendente'
             )
         """)
         
@@ -126,29 +128,74 @@ def criar_tabela_vendas():
     except Exception as e:
         print("Erro ao criar tabelas de vendas:", e)
 
+def atualizar_tabela_vendas():
+    """Atualiza a tabela vendas com colunas de pagamento"""
+    try:
+        conn = psycopg2.connect(
+            dbname="loja",  
+            user="postgres",      
+            password="postgres123",  
+            host="localhost",       
+            port="5432"             
+        )
+        cursor = conn.cursor()
+        
+        # Verificar se as colunas já existem
+        cursor.execute("""
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_name = 'vendas' AND column_name = 'forma_pagamento'
+        """)
+        
+        coluna_existe = cursor.fetchone()
+        
+        if not coluna_existe:
+            # Adicionar colunas de pagamento
+            cursor.execute("""
+                ALTER TABLE vendas 
+                ADD COLUMN forma_pagamento VARCHAR(50),
+                ADD COLUMN status_pagamento VARCHAR(50) DEFAULT 'pendente'
+            """)
+            print("Colunas de pagamento adicionadas à tabela vendas!")
+        else:
+            print("Colunas de pagamento já existem na tabela vendas!")
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+    except Exception as e:
+        print("Erro ao atualizar tabela vendas:", e)
+
 def verificar_e_criar_tabelas():
     """Verifica e cria todas as tabelas necessárias"""
     try:
         cria_banco()
-    except:
-        print("Banco já existe ou erro ao criar, continuando...")
+    except Exception as e:
+        print(f"Banco já existe ou erro ao criar: {e}, continuando...")
     
     try:
         cria_tabela_produtos()
-    except:
-        print("Tabela produtos já existe ou erro ao criar, continuando...")
+    except Exception as e:
+        print(f"Tabela produtos já existe ou erro ao criar: {e}, continuando...")
     
     try:
         criar_tabela_usuario()
-    except:
-        print("Tabela usuarios já existe ou erro ao criar, continuando...")
+    except Exception as e:
+        print(f"Tabela usuarios já existe ou erro ao criar: {e}, continuando...")
     
     try:
-        criar_tabela_vendas()
-    except:
-        print("Tabelas de vendas já existem ou erro ao criar, continuando...")
+        criar_tabela_vendas()  # Esta já inclui as colunas de pagamento
+    except Exception as e:
+        print(f"Tabelas de vendas já existem ou erro ao criar: {e}, continuando...")
+    
+    # Para garantir, também executa a atualização se necessário
+    try:
+        atualizar_tabela_vendas()
+    except Exception as e:
+        print(f"Erro ao atualizar tabela vendas: {e}, continuando...")
 
 if __name__ == "__main__":
+    print("=== INICIANDO CONFIGURAÇÃO DO BANCO DE DADOS ===")
     verificar_e_criar_tabelas()
-
-
+    print("=== CONFIGURAÇÃO DO BANCO CONCLUÍDA ===")
