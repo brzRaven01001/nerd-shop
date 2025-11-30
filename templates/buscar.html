@@ -4,8 +4,40 @@
     <meta charset="UTF-8">
     <title>Resultados da Busca</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+
+        <header class="headercima">
+            <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+
+            <div class="extras">
+                <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+                <a href="perifericos.html" class="espcs">Periféricos</a>
+                <a href="console.html" class="espcs">Console</a>
+                <a href="suporte.html" class="espcs">Suporte</a>
+                <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+            </div>
+
+           <div class="barrapesquisa">
+                <form action="{{ url_for('buscar') }}" method="GET" class="barrapesquisa">
+                    <input type="text" name="query" placeholder="BUSCAR">
+                    <button type="submit" class="pesquisa">OK</button>
+                </form>
+            </div>
+
+            <div class="acoes-header">
+                <a href="{{ url_for('ver_carrinho') }}" 
+                style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+                    🛒 Carrinho
+                </a>
+
+                <div class="menu-container">
+                    <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+                    <div class="menudropdown" id="menudropdown">
+                        <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
+                        <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
+                    </div>
+                </div>
+            </div>
+        </header>
 
 <h2>Resultados para "{{ termo }}"</h2>
 

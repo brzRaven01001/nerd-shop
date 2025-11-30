@@ -18,9 +18,11 @@
                 <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
             </div>
 
-            <div class="barrapesquisa">
-                <input type="text" placeholder="BUSCAR">
-                <button class="pesquisa">OK</button>
+           <div class="barrapesquisa">
+                <form action="{{ url_for('buscar') }}" method="GET" class="barrapesquisa">
+                    <input type="text" name="query" placeholder="BUSCAR">
+                    <button type="submit" class="pesquisa">OK</button>
+                </form>
             </div>
 
             <div class="acoes-header">
