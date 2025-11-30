@@ -69,8 +69,8 @@ def buscarProdutosSQL(termo):
         cur.execute("""
             SELECT nome, descricao, preco, categoria, estoque, imagem_url, id 
             FROM produtos
-            WHERE LOWER(nome) LIKE %s OR LOWER(descricao) LIKE %s;
-        """, (f"%{termo.lower()}%", f"%{termo.lower()}%"))
+            WHERE LOWER(nome) LIKE %s OR LOWER(categoria) LIKE %s OR LOWER(descricao) LIKE %s;
+        """, (f"%{termo.lower()}%", f"%{termo.lower()}%",f"%{termo.lower()}%" ))
 
         resultados = cur.fetchall()
 

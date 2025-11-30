@@ -2,61 +2,116 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Resultados da Busca</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Busca - NERDSHOP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pc.css') }}">
+</head>
+<body>
 
-        <header class="headercima">
-            <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+    <header class="headercima">
+        <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
 
-            <div class="extras">
-                <a href="{{ url_for('pc') }}" class="espcs">PC</a>
-                <a href="perifericos.html" class="espcs">Periféricos</a>
-                <a href="console.html" class="espcs">Console</a>
-                <a href="suporte.html" class="espcs">Suporte</a>
-                <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
-            </div>
+        <div class="extras">
+            <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+            <a href="perifericos.html" class="espcs">Periféricos</a>
+            <a href="console.html" class="espcs">Console</a>
+            <a href="suporte.html" class="espcs">Suporte</a>
+            <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+        </div>
 
-           <div class="barrapesquisa">
-                <form action="{{ url_for('buscar') }}" method="GET" class="barrapesquisa">
-                    <input type="text" name="query" placeholder="BUSCAR">
-                    <button type="submit" class="pesquisa">OK</button>
-                </form>
-            </div>
+        <div class="barrapesquisa">
+            <form action="{{ url_for('buscar') }}" method="GET" class="barrapesquisa">
+                <input type="text" name="query" placeholder="BUSCAR" value="{{ termo }}">
+                <button type="submit" class="pesquisa">OK</button>
+            </form>
+        </div>
 
-            <div class="acoes-header">
-                <a href="{{ url_for('ver_carrinho') }}" 
-                style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
-                    🛒 Carrinho
-                </a>
+        <div class="acoes-header">
+            <a href="{{ url_for('ver_carrinho') }}" 
+            style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+                🛒 Carrinho
+            </a>
 
-                <div class="menu-container">
-                    <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
-                    <div class="menudropdown" id="menudropdown">
-                        <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
-                        <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
-                    </div>
+            <div class="menu-container">
+                <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+                <div class="menudropdown" id="menudropdown">
+                    <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
+                    <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-<h2>Resultados para "{{ termo }}"</h2>
+    <script>
+    function toggleMenu() {
+        document.getElementById('menudropdown').classList.toggle('show');
+    }
+    </script>
 
-<div class="produtos-container">
-    {% if produtos %}
-        {% for produto in produtos %}
-            <div class="produto-card">
-                <a href="{{ url_for('produto_detalhe', produto_id=produto[6]) }}">
-                    <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+    <section>
+
+        <h2 style="text-align:center; margin-top:20px;">
+            Resultados da busca por: <strong>"{{ termo }}"</strong>
+        </h2>
+
+        <form method="GET" action="{{ url_for('buscar') }}" class="filtro-container"
+              style="max-width:800px; margin:20px auto; display:flex; gap:10px; flex-wrap:wrap;">
+
+            <input type="text" name="nome" placeholder="Buscar por nome"
+                    value="{{ request.args.get('nome', termo) }}">
+
+            <input type="text" name="categoria" placeholder="Categoria"
+                   value="{{ request.args.get('categoria', '') }}">
+
+            <input type="number" step="0.01" name="preco_min" placeholder="Preço mínimo"
+                   value="{{ request.args.get('preco_min', '') }}">
+
+            <input type="number" step="0.01" name="preco_max" placeholder="Preço máximo"
+                   value="{{ request.args.get('preco_max', '') }}">
+
+            <button type="submit" class="btn-filtrar">Filtrar</button>
+        </form>
+
+
+        <div class="produtos-container">
+            {% if produtos %}
+                {% for produto in produtos %}
+                <div class="produto-card">
+
+                    {% if produto[5] %}
+                        <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+                    {% endif %}
+
                     <h3>{{ produto[0] }}</h3>
                     <p>{{ produto[1] }}</p>
-                    <strong>R$ {{ produto[2] }}</strong>
-                </a>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p>Nenhum produto encontrado.</p>
-    {% endif %}
-</div>
+                    <p><strong>R$ {{ produto[2] }}</strong></p>
+                    <p>Categoria: {{ produto[3] }}</p>
+                    <p>Estoque: {{ produto[4] }}</p>
+
+                    <form action="{{ url_for('adicionar_carrinho') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+                        <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
+                    </form>
+                    
+                    <form action="{{ url_for('comprar_agora') }}" method="POST" style="display: inline;">
+                        <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+                        <button type="submit" class="btn-comprar">Comprar Agora</button>
+                    </form>
+
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align:center; margin:20px;">Nenhum produto encontrado.</p>
+            {% endif %}
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
+    </footer>
 
 </body>
 </html>
