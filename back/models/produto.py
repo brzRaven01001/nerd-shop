@@ -65,7 +65,7 @@ def buscarProdutosSQL(termo):
         )
         cur = conn.cursor()
 
-        # Busca por nome OU descrição (case-insensitive)
+        
         cur.execute("""
             SELECT nome, descricao, preco, categoria, estoque, imagem_url, id 
             FROM produtos
