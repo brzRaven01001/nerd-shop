@@ -82,12 +82,41 @@ function toggleMenu() {
             <button type="submit" class="btn-comprar">Comprar Agora</button>
         </form>
 
-       
+        <h2 style="margin-top:25px; color:#00ffff;">Avaliar este produto</h2>
+
+        <form action="{{ url_for('avaliar_produto') }}" method="POST" style="margin-top:15px;">
+            <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+
+            <label>Nota:</label>
+            <select name="nota" style="padding:8px; border-radius:8px;">
+                <option value="1">1 ⭐</option>
+                <option value="2">2 ⭐</option>
+                <option value="3">3 ⭐</option>
+                <option value="4">4 ⭐</option>
+                <option value="5">5 ⭐</option>
+            </select>
+
+            <label>Comentário:</label>
+            <textarea name="comentario" style="width:100%; margin-top:5px; border-radius:12px; padding:10px;"></textarea>
+
+            <button type="submit" class="btn-comprar" style="margin-top:10px; background:#00ffff;">Enviar avaliação</button>
+        </form>
+
+        <h3 class="reviews-title">Avaliações:</h3>
+
+        {% if avaliacoes %}
+            {% for a in avaliacoes %}
+                <p style="margin-top:8px;">{{ a[0] }} ⭐ - {{ a[1] }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Este produto ainda não possui avaliações.</p>
+        {% endif %}
+
     </div>
 </div>
 
 <footer class="footer">
-    <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
+    <p>© 2025 NERDSHOP</p>
 </footer>
 
 </body>

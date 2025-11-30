@@ -7,7 +7,7 @@ from back.models.venda import obter_venda_por_id
 from back.controllers.venda_controller import VendaController, executar_venda_controller
 from back.controllers.carrinho_controller import CarrinhoController
 from back.models.pagamento import obter_formas_pagamento, atualizar_forma_pagamento, simular_processamento_pagamento
-
+from back.models.produto import salvar_avaliacao, buscar_avaliacoes
 app = Flask(__name__)
 app.secret_key = 'postgres123'
 app.register_blueprint(url)
@@ -168,7 +168,9 @@ def produto_detalhe(produto_id):
     print(f"Produto ID recebido: {produto_id}") 
     if not produto:
         return "Produto não achado", 404
-    return render_template("produto_detalhe.html", produto=produto)
+    avaliacoes = buscar_avaliacoes(produto_id)
+    return render_template("produto_detalhe.html", produto=produto, avaliacoes=avaliacoes)
+
 
 @app.route('/submit-product', methods=['POST'])
 def submit_product():
@@ -193,7 +195,7 @@ def executar_venda():
 def confirmacao():
     return render_template("index.html")
 
-# ====== NOVAS ROTAS DE PAGAMENTO ======
+
 
 @app.route("/pagamento")
 def tela_pagamento():
@@ -202,7 +204,7 @@ def tela_pagamento():
         flash("Você precisa estar logado para finalizar a compra!", "error")
         return redirect(url_for('login_usuario'))
     
-    # Verifica se tem carrinho normal OU carrinho temporário (compra direta)
+ 
     carrinho_normal = session.get('carrinho', [])
     carrinho_temporario = session.get('carrinho_temporario', [])
     
@@ -210,7 +212,7 @@ def tela_pagamento():
         flash("Seu carrinho está vazio!", "error")
         return redirect(url_for('ver_carrinho'))
     
-    # Usa o carrinho temporário se existir, senão usa o normal
+ 
     carrinho = carrinho_temporario if carrinho_temporario else carrinho_normal
     
     formas_pagamento = obter_formas_pagamento()
@@ -227,14 +229,14 @@ def processar_pagamento():
     if 'usuario' not in session:
         return jsonify({"success": False, "message": "Usuário não logado"}), 401
     
-    # Verifica se tem carrinho normal OU carrinho temporário
+ 
     carrinho_normal = session.get('carrinho', [])
     carrinho_temporario = session.get('carrinho_temporario', [])
     
     if not carrinho_normal and not carrinho_temporario:
         return jsonify({"success": False, "message": "Carrinho vazio"}), 400
     
-    # Usa o carrinho temporário se existir, senão usa o normal
+
     carrinho = carrinho_temporario if carrinho_temporario else carrinho_normal
     
     forma_pagamento = request.form.get('forma_pagamento')
@@ -342,6 +344,22 @@ def buscar():
 
     produtos = buscarProdutosSQL(termo)
     return render_template("buscar.html", produtos=produtos, termo=termo)
+
+
+@app.route("/avaliar_produto", methods=["POST"])
+def avaliar_produto():
+    produto_id = request.form.get("produto_id")
+    nota = request.form.get("nota")
+    comentario = request.form.get("comentario")
+
+    if not produto_id or not nota:
+        flash("Por favor, selecione uma nota.", "error")
+        return redirect(request.referrer)
+
+    salvar_avaliacao(produto_id, nota, comentario)
+    flash("Avaliação enviada com sucesso!", "success")
+    return redirect(url_for("produto_detalhe", produto_id=produto_id))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
