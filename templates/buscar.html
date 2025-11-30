@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados da Busca</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2>Resultados para "{{ termo }}"</h2>
+
+<div class="produtos-container">
+    {% if produtos %}
+        {% for produto in produtos %}
+            <div class="produto-card">
+                <a href="{{ url_for('produto_detalhe', produto_id=produto[6]) }}">
+                    <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+                    <h3>{{ produto[0] }}</h3>
+                    <p>{{ produto[1] }}</p>
+                    <strong>R$ {{ produto[2] }}</strong>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nenhum produto encontrado.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

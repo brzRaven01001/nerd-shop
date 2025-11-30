@@ -53,3 +53,32 @@ def getProdutos():
     except Exception as e:
         print("Erro ao buscar produtos:", e)
         return []
+    
+def buscarProdutosSQL(termo):
+    try:
+        conn = psycopg2.connect(
+            dbname="loja",
+            user="postgres",
+            password="postgres123",
+            host="localhost",
+            port="5432"
+        )
+        cur = conn.cursor()
+
+        # Busca por nome OU descrição (case-insensitive)
+        cur.execute("""
+            SELECT nome, descricao, preco, categoria, estoque, imagem_url, id 
+            FROM produtos
+            WHERE LOWER(nome) LIKE %s OR LOWER(descricao) LIKE %s;
+        """, (f"%{termo.lower()}%", f"%{termo.lower()}%"))
+
+        resultados = cur.fetchall()
+
+        cur.close()
+        conn.close()
+
+        return resultados
+
+    except Exception as e:
+        print("Erro ao buscar produtos:", e)
+        return []

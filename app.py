@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from back.controllers.cadastro_controller import url
 from back.controllers.cadastro_usuario import url_usuario
-from back.models.produto import insereProdutoSQL, getProdutos
+from back.models.produto import insereProdutoSQL, getProdutos, buscarProdutosSQL
 from back.models.usuario import cadastra_usuario, autentica_usuario
 from back.controllers.venda_controller import VendaController, executar_venda_controller
 from back.controllers.carrinho_controller import CarrinhoController
@@ -165,6 +165,12 @@ def submit_product():
 def executar_venda():
     return executar_venda_controller()
 
+@app.route("/buscar")
+def buscar():
+    termo = request.args.get("query", "")
+
+    produtos = buscarProdutosSQL(termo)
+    return render_template("buscar.html", produtos=produtos, termo=termo)
 
 if __name__ == "__main__":
     app.run(debug=True)
