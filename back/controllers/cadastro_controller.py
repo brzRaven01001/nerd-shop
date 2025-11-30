@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, render_template, url_for, redirect
-from back.models.model import insereProdutoSQL
+from back.models.produto import insereProdutoSQL
 
 url = Blueprint("app_pb", __name__)
 

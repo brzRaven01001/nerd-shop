@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ produto[0] }} - NERDSHOP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='produtos.css') }}">
+</head>
+<body>
+
+<header class="headercima">
+    <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
+
+    <div class="extras">
+        <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+        <a href="perifericos.html" class="espcs">Periféricos</a>
+        <a href="console.html" class="espcs">Console</a>
+        <a href="suporte.html" class="espcs">Suporte</a>
+        <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+    </div>
+    <div class="barrapesquisa">
+        <input type="text" placeholder="BUSCAR">
+        <button class="pesquisa">OK</button>
+    </div>
+
+    <div class="acoes-header">
+        <a href="{{ url_for('ver_carrinho') }}" 
+           style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+           🛒 Carrinho
+        </a>
+
+        <div class="menu-container">
+            <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+            <div class="menudropdown" id="menudropdown">
+                <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
+                <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById('menudropdown');
+    menu.classList.toggle('show');
+}
+</script>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for msg in messages %}
+        <div class="flash">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="produto-detalhe-container">
+    <div class="produto-detalhe-imagem">
+        {% if produto[5] %}
+            <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+        {% else %}
+            <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+        {% endif %}
+    </div>
+
+    <div class="produto-detalhe-info">
+        <h1>{{ produto[0] }}</h1>
+        <p>{{ produto[1] }}</p>
+        <p><strong>R$ {{ produto[2] }}</strong></p>
+        <p>Categoria: {{ produto[3] }}</p>
+        <p>Estoque: {{ produto[4] }}</p>
+
+        <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
+            <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+            <button type="submit" class="btn-carrinho">Adicionar ao Carrinho</button>
+        </form>
+
+        <form action="{{ url_for('adicionar_carrinho') }}" method="POST">
+            <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+            <button type="submit" class="btn-comprar">Comprar Agora</button>
+        </form>
+
+        <h2 style="margin-top:25px; color:#00ffff;">Avaliar este produto</h2>
+
+        <form action="{{ url_for('avaliar_produto') }}" method="POST" style="margin-top:15px;">
+            <input type="hidden" name="produto_id" value="{{ produto[6] }}">
+
+            <label>Nota:</label>
+            <select name="nota" style="padding:8px; border-radius:8px;">
+                <option value="1">1 ⭐</option>
+                <option value="2">2 ⭐</option>
+                <option value="3">3 ⭐</option>
+                <option value="4">4 ⭐</option>
+                <option value="5">5 ⭐</option>
+            </select>
+
+            <label>Comentário:</label>
+            <textarea name="comentario" style="width:100%; margin-top:5px; border-radius:12px; padding:10px;"></textarea>
+
+            <button type="submit" class="btn-comprar" style="margin-top:10px; background:#00ffff;">Enviar avaliação</button>
+        </form>
+
+        <h3 class="reviews-title">Avaliações:</h3>
+
+        {% if avaliacoes %}
+            {% for a in avaliacoes %}
+                <p style="margin-top:8px;">{{ a[0] }} ⭐ - {{ a[1] }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Este produto ainda não possui avaliações.</p>
+        {% endif %}
+
+    </div>
+</div>
+
+<footer class="footer">
+    <p>© 2025 NERDSHOP</p>
+</footer>
+
+</body>
+</html>

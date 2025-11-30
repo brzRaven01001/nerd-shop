@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Carrinho de Compras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='carrinho.css') }}">
+</head>
+<body>
+    <h1>Seu Carrinho</h1>
+
+    {% if carrinho %}
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th class="preco">Preço Unitário</th>
+                <th class="preco">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carrinho %}
+            <tr>
+                <td>
+                    {% if item.imagem_url %}
+                        <img src="{{ item.imagem_url }}" alt="{{ item.nome }}" width="50">
+                    {% endif %}
+                    {{ item.nome }}
+                </td>
+                <td>{{ item.quantidade }}</td>
+                <td class="preco">R$ {{ "%.2f"|format(item.preco) }}</td>
+                <td class="preco">R$ {{ "%.2f"|format(item.subtotal) }}</td>
+                <td>
+                    <form action="{{ url_for('remover_item_carrinho') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="produto_id" value="{{ item.produto_id }}">
+                        <button type="submit" class="lixeira">🗑️</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total">Total: <strong>R$ {{ "%.2f"|format(total) }}</strong></div>
+
+    {% else %}
+        <p>Seu carrinho está vazio</p>
+    {% endif %}
+
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('index') }}"> Continuar comprando</a>
+        
+        {% if carrinho %}
+            <!-- BOTÃO ATUALIZADO PARA A NOVA TELA DE PAGAMENTO -->
+            <a href="{{ url_for('tela_pagamento') }}" class="btn-comprar">
+                🚀 Finalizar Compra
+            </a>
+        {% endif %}
+    </div>
+</body>
+</html>

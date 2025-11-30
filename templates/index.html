@@ -2,71 +2,90 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8"> 
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NERDSHOP</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
 </head>
-
 <body>
 
 <header class="headercima">
     <div class="logo"><a href="{{ url_for('index') }}">NERDSHOP</a></div>
 
     <div class="extras">
-      <a href="{{ url_for('pc') }}" class="espcs">PC</a>
-      <a href="perifericos.html" class="espcs">Periféricos</a>
-      <a href="console.html" class="espcs">Console</a>
-      <a href="suporte.html" class="espcs">Suporte</a>
-      <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
+        <a href="{{ url_for('pc') }}" class="espcs">PC</a>
+        <a href="perifericos.html" class="espcs">Periféricos</a>
+        <a href="console.html" class="espcs">Console</a>
+        <a href="suporte.html" class="espcs">Suporte</a>
+        <a href="{{ url_for('cadastro') }}" class="espcs">Cadastrar Produtos</a>
     </div>
 
     <div class="barrapesquisa">
-        <input type="text" placeholder="BUSCAR">
-        <button class="pesquisa">OK</button>
+        <form action="{{ url_for('buscar') }}" method="GET" class="barrapesquisa">
+            <input type="text" name="query" placeholder="BUSCAR">
+            <button type="submit" class="pesquisa">OK</button>
+        </form>
     </div>
 
     <div class="acoes-header">
-        <img src="{{ url_for('static', filename='src/1.png') }}" alt="carrinho" class="iconheader">
-        <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
+        <a href="{{ url_for('ver_carrinho') }}" 
+           style="text-decoration:none; cursor:pointer; font-size:16px; padding:6px 10px; background-color:#222; color:white; border-radius:6px;">
+           🛒 Carrinho
+        </a>
+
         <div class="menu-container">
             <img src="{{ url_for('static', filename='src/2.png') }}" alt="menu" class="iconheader" onclick="toggleMenu()">
             <div class="menudropdown" id="menudropdown">
-                <a href="../login/login.html" class="botaomenu">login</a> 
-                <a href="{{ url_for('cadastro') }}"  class="botaomenu">cadastro</a>
+                <a href="{{ url_for('cadastro_usuario') }}" class="botaomenu">Cadastro</a>
+                <a href="{{ url_for('login_usuario') }}" class="botaomenu">Login</a> 
             </div>
         </div>
     </div>
-
-    </div>
-
-
 </header>
 
-<script> <!--dropdown-->
-  function toggleMenu() {
+<script>
+function toggleMenu() {
     const menu = document.getElementById('menudropdown');
     menu.classList.toggle('show');
-  }
+}
 </script>
-<!-- FIM DO HEADER -->
 
-  <div class="foto">
-    <img src="{{ url_for('static', filename='src/3.jpg') }}" alt="pc" class="fotos kenburns">
-    <img src="{{ url_for('static', filename='src/4.jpg') }}" alt="console" class="fotos">
-  </div>
-  <!-- fotos perifericos-->
+<div class="foto">
+    <img src="{{ url_for('static', filename='src/3.png') }}" alt="pc" class="fotos kenburns">
+</div>
 
-  <div class="grid">
-    <img src="{{ url_for('static', filename='src/5.jpg') }}" alt="teclado">
-    <img src="{{ url_for('static', filename='src/6.jpg') }}" alt="mouse">
-    <img src="{{ url_for('static', filename='src/7.jpg') }}" alt="fone">
-    <img src="{{ url_for('static', filename='src/8.jpg') }}" alt="controle">
-  </div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for msg in messages %}
+        <p>{{ msg }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
+<section>
+    <h2 class="produtos-title">Produtos em Destaque</h2>
+    <div class="produtos-container">
+        {% for produto in produtos %}
+        <div class="produto-card">
+            <a href="{{ url_for('produto_detalhe', produto_id=produto[6]) }}">
+                {% if produto[5] %}
+                    <img src="{{ produto[5] }}" alt="{{ produto[0] }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='src/default.png') }}" alt="{{ produto[0] }}">
+                {% endif %}
+                <h3>{{ produto[0] }}</h3>
+                <p>{{ produto[1] }}</p>
+                <p><strong>R$ {{ produto[2] }}</strong></p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 
-  <footer class="footer">
+<footer class="footer">
     <p>© 2025 NERDSHOP - Todos os direitos reservados</p>
-  </footer>
+</footer>
+
 </body>
 </html>

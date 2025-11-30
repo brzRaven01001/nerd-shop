@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
+<link rel="stylesheet" href="../static/login_usuario.css">
+</head>
+<body>
+
+<form id="loginForm">
+
+<div class="wrapper">
+  <div class="login_box">
+    <div class="login-header">
+      <span>Login</span>
+    </div>
+
+    <div class="input_box">
+      <input type="text" name="email" id="email" class="input-field" required>
+      <label for="email" class="label">E-mail</label>
+      <i class="bx bx-user icon"></i>
+    </div>
+
+    <div class="input_box">
+      <input type="password" name="senha" id="senha" class="input-field" required>
+      <label for="senha" class="label">Senha</label>
+      <i class="bx bx-lock-alt icon"></i>
+    </div>
+
+    <div class="remember-forgot">
+      <div class="remember-me">
+        <input type="checkbox" id="remember">
+        <label for="remember">Lembre de mim</label>
+      </div>
+
+      <div class="forgot">
+        <a href="#">Esqueceu a senha?</a>
+      </div>
+    </div>
+
+     <div class="submit-button">
+            <input type="submit" value="Realizar Login">
+      </div>
+
+    <div class="register">
+      <span>Não possui conta? <a href="{{ url_for('cadastro_usuario') }}">Registre-se agora!</a></span>
+    </div>
+  </div>
+</div>
+</form> 
+  <script>
+
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    const response = await fetch("{{ url_for('login_usuario') }}", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+        alert("Login realizado com sucesso!");
+        window.location.href = data.redirect; 
+    } else {
+        alert(data.message);
+    }
+});
+</script>
+</body>
+</html>

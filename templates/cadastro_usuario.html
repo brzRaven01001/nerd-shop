@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Registre-se</title>
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
+  <link rel="stylesheet" href="../static/cadastro_usuario.css">
+</head>
+    <script>
+
+    </script>
+<body>
+  <div class="wrapper">
+    <div class="login_box">
+      <div class="login-header">
+        <span>Cadastro</span>
+      </div>
+    <script>
+      function toggleMenu() {
+        const Salvar = document.getElementById('menudropdown');
+        Salvar.classList.toggle('show');
+      }
+    </script>
+      <form action="{{ url_for('cadastro_usuario') }}" method="post">
+        <div class="input_box">
+          <input type="text" id="user" name="nome" class="input-field" required>
+          <label for="user" class="label">Nome</label>
+          <i class="bx bx-user icon"></i>
+        </div>
+
+        <div class="input_box">
+          <input type="email" id="email" name="email" class="input-field" required>
+          <label for="email" class="label">E-mail</label>
+          <i class="bx bx-envelope icon"></i>
+        </div>
+
+
+        <div class="input_box">
+          <input type="password" id="pass" name="senha" class="input-field" required>
+          <label for="pass" class="label">Senha</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+
+        <div class="Termos">
+          <input type="checkbox" id="Termos" required>
+          <label for="Termos">Aceito os termos de uso</label>
+        </div>
+
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Salvar" />
+        </div>
+      </form> 
+    </div>
+  </div>
+
+  
+</body>
+</html>
